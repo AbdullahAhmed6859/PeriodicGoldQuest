@@ -19,7 +19,8 @@ def player1():      #showing character on scrn
     scrn.blit(player1img, (x1,y1))         #blit is used to draw anything on window parameters: obj and cordinates
 def player2():
     scrn.blit(player2img, (x2,y2))
-
+def radioactive():
+    pygame.draw.line(scrn, (pygame.Color("lightsteelblue4")),(209,345),(209,413+68),7)
 def drawhome():
     xh=210
     yh=15
@@ -153,6 +154,7 @@ while run:
         drawhome()
         player1()
         player2()
+        radioactive()
         pygame.display.update()     #to update changes on screen
         turn+=1
 

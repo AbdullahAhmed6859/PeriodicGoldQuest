@@ -3,7 +3,7 @@ pygame.init()   #to import and initialise pygame
 scrn=pygame.display.set_mode((1254,650))  #setting the screen
 scrn.fill((pygame.Color("antiquewhite")))
 pygame.display.set_caption("Periodic Gold Quest")     #title
-x1=5+68+68+68
+x1=5+68+68+68+68
 y1=5+68
 x2=5+68+68+68+68+68
 y2=5+68  #coordinates of character1

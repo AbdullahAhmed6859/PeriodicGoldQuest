@@ -1,4 +1,5 @@
 import pygame   
+import random
 pygame.init()   #to import and initialise pygame
 scrn=pygame.display.set_mode((1254,650))  #setting the screen
 scrn.fill((pygame.Color("antiquewhite")))
@@ -118,8 +119,15 @@ def drawboard():        #drawing periodic table and color coding
         y_co+=68
         x_co=5
 
-def dice_simulation():
-    pass
+
+def dice_simulation(num):
+    h,w=150,150
+    x=7
+    y=490
+    images=["dice.1.png","dice.2.png","dice.3.png","dice.4.png","dice.5.png","dice.6.png"]
+    diceimg=pygame.image.load(images[num-1])   #images of both players
+    diceimg = pygame.transform.scale(diceimg, (h, w))
+    scrn.blit(diceimg, (x,y))
 
 def gamewin():      #main game window with all display helper functions
     scrn.fill((pygame.Color("antiquewhite")))       #to hide previous traces with black colour(bg) 
@@ -128,6 +136,7 @@ def gamewin():      #main game window with all display helper functions
     player1()
     player2()
     radioactive()
+    dice_simulation(num)
 turn=0    
 while run:
     
@@ -135,7 +144,8 @@ while run:
     for event in pygame.event.get():   #all inputs from user are events
         if event.type==pygame.QUIT:
             run=False             #for quitting the game
-        keys=pygame.key.get_pressed()   
+        keys=pygame.key.get_pressed()  
+        num=random.randint(1,6) 
         if turn%2==0:
             if keys[pygame.K_LEFT] and x1>vel:     #changing coordinates with key press
                 x1-=vel                  #conditions to handle moving out of scrn(coordinates from top left)
@@ -159,6 +169,7 @@ while run:
         
                
         gamewin()
+
         pygame.display.update()     #to update changes on screen
         turn+=1
 

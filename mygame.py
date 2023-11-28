@@ -117,9 +117,17 @@ def drawboard():        #drawing periodic table and color coding
             x_co+=68
         y_co+=68
         x_co=5
-drawboard()
+
 def dice_simulation():
     pass
+
+def gamewin():      #main game window with all display helper functions
+    scrn.fill((pygame.Color("antiquewhite")))       #to hide previous traces with black colour(bg) 
+    drawboard()
+    drawhome()
+    player1()
+    player2()
+    radioactive()
 turn=0    
 while run:
     
@@ -149,12 +157,8 @@ while run:
             if keys[pygame.K_DOWN] and y2<650-height-vel:          #for changing position on arrow key presses
                 y2+=vel
         
-        scrn.fill((pygame.Color("antiquewhite")))       #to hide previous traces with black colour(bg)        
-        drawboard()
-        drawhome()
-        player1()
-        player2()
-        radioactive()
+               
+        gamewin()
         pygame.display.update()     #to update changes on screen
         turn+=1
 

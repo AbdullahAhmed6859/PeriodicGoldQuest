@@ -29,6 +29,38 @@ def drawhome():
     font= pygame.font.Font("freesansbold.ttf", 38)
     head=font.render("HOME", True, (pygame.Color("darkseagreen3")))
     scrn.blit(head, (xh+(72),yh+3))
+    font2= pygame.font.Font("freesansbold.ttf", 18)
+    ins=font2.render("Hold on to 'i' for instructions", True, (pygame.Color("goldenrod3")))
+    scrn.blit(ins, (821,5))
+
+def instructions():
+    font= pygame.font.Font("freesansbold.ttf", 20)
+    scrn.fill((pygame.Color("antiquewhite")))
+    pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod1")),(141,73,34,34))
+    pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod4")),(141,73,34,34),1)
+    i1=font.render("grp1 and grp7 elements reacting and ending at colored positions", True, (pygame.Color("azure4")))
+    scrn.blit(i1, (270,73))
+    pygame.draw.rect(scrn,(pygame.Color("pink2")),(141,113,34,34))
+    pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod4")),(141,113,34,34),1)
+    i2=font.render("grp2 and grp6 elements reacting and ending at colored positions", True, (pygame.Color("azure4")))
+    scrn.blit(i2, (270,113))
+    pygame.draw.rect(scrn,(pygame.Color("indianred2")),(141,153,34,34))
+    pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod4")),(141,153,34,34),1)
+    i3=font.render("poisonous elements return player to home", True, (pygame.Color("azure4")))
+    scrn.blit(i3, (270,153))
+    pygame.draw.rect(scrn,(pygame.Color("lightsteelblue3")),(141,193,34,34))
+    pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod4")),(141,193,34,34),1)
+    i4=font.render("radioactive elements attack opponent", True, (pygame.Color("azure4")))
+    scrn.blit(i4, (270,193))
+    pygame.draw.rect(scrn,(pygame.Color("cyan2")),(141,233,34,34))
+    pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod4")),(141,233,34,34),1)
+    i5=font.render("shield protects from attack of opponent", True, (pygame.Color("azure4")))
+    scrn.blit(i5, (270,233))
+    pygame.draw.rect(scrn,(pygame.Color("darkgoldenrod")),(141,273,34,34))
+    pygame.draw.rect(scrn,(pygame.Color("gold1")),(141,273,34,34),3)
+    i6=font.render("player wins when it reaches Gold(Au)", True, (pygame.Color("azure4")))
+    scrn.blit(i6, (270,273))
+
 
 
 def drawboard():        #drawing periodic table and color coding
@@ -137,6 +169,12 @@ def gamewin():      #main game window with all display helper functions
     player2()
     radioactive()
     dice_simulation(num)
+
+def views(view):
+    if view=="i":
+        instructions()
+    if view=="g":
+        gamewin()
 turn=0    
 while run:
     
@@ -144,31 +182,41 @@ while run:
     for event in pygame.event.get():   #all inputs from user are events
         if event.type==pygame.QUIT:
             run=False             #for quitting the game
-        keys=pygame.key.get_pressed()  
-        num=random.randint(1,6) 
-        if turn%2==0:
-            if keys[pygame.K_LEFT] and x1>vel:     #changing coordinates with key press
-                x1-=vel                  #conditions to handle moving out of scrn(coordinates from top left)
-            if keys[pygame.K_RIGHT] and x1<1254-width-vel:
-                x1+=vel
-            if keys[pygame.K_UP] and y1>vel:
-                y1-=vel
-            if keys[pygame.K_DOWN] and y1<650-height-vel:          #for changing position on arrow key presses
-                y1+=vel
-        
+        view="g"
+        keys=pygame.key.get_pressed()   
+        num=random.randint(1,6)
+        if keys[pygame.K_LEFT] and x1>vel and turn%2==0:     #changing coordinates with key press
+            x1-=vel*num                 #conditions to handle moving out of scrn(coordinates from top left)
+            turn+=1
+        elif keys[pygame.K_RIGHT] and x1<1254-width-vel and turn%2==0:
+            x1+=vel*num
+            turn+=1
+        elif keys[pygame.K_UP] and y1>vel and turn%2==0:
+            y1-=vel*num
+            turn+=1
+        elif keys[pygame.K_DOWN] and y1<650-height-vel and turn%2==0:          #for changing position on arrow key presses
+            y1+=vel*num
+            turn+=1
+        elif keys[pygame.K_LEFT] and x2>vel and turn%2!=0:     #changing coordinates with key press
+            x2-=vel*num
+            turn+=1                  #conditions to handle moving out of scrn(coordinates from top left)
+        elif keys[pygame.K_RIGHT] and x2<1254-width-vel and turn%2!=0:
+            x2+=vel*num
+            turn+=1
+        elif keys[pygame.K_UP] and y2>vel and turn%2!=0:
+            y2-=vel*num
+            turn+=1
+        elif keys[pygame.K_DOWN] and y2<650-height-vel and turn%2!=0:          #for changing position on arrow key presses
+            y2+=vel*num
+            turn+=1
+        elif keys[pygame.K_i]:
+            view="i"
 
-        else:
-            if keys[pygame.K_LEFT] and x2>vel:     #changing coordinates with key press
-                x2-=vel                  #conditions to handle moving out of scrn(coordinates from top left)
-            if keys[pygame.K_RIGHT] and x2<1254-width-vel:
-                x2+=vel
-            if keys[pygame.K_UP] and y2>vel:
-                y2-=vel
-            if keys[pygame.K_DOWN] and y2<650-height-vel:          #for changing position on arrow key presses
-                y2+=vel
+        views(view)
+                
         
                
-        gamewin()
+        
 
         pygame.display.update()     #to update changes on screen
         turn+=1

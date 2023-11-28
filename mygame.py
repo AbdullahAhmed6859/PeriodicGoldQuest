@@ -185,28 +185,28 @@ while run:
         view="g"
         keys=pygame.key.get_pressed()   
         num=random.randint(1,6)
-        if keys[pygame.K_LEFT] and x1>vel and turn%2==0:     #changing coordinates with key press
+        if keys[pygame.K_LEFT] and x1>vel*num and turn%2==0:     #changing coordinates with key press
             x1-=vel*num                 #conditions to handle moving out of scrn(coordinates from top left)
             turn+=1
-        elif keys[pygame.K_RIGHT] and x1<1254-width-vel and turn%2==0:
+        elif keys[pygame.K_RIGHT] and x1<1254-width-(vel*num) and turn%2==0:
             x1+=vel*num
             turn+=1
-        elif keys[pygame.K_UP] and y1>vel and turn%2==0:
+        elif keys[pygame.K_UP] and y1>vel*num and turn%2==0:
             y1-=vel*num
             turn+=1
-        elif keys[pygame.K_DOWN] and y1<650-height-vel and turn%2==0:          #for changing position on arrow key presses
+        elif keys[pygame.K_DOWN] and y1<650-height-(vel*num) and turn%2==0:          #for changing position on arrow key presses
             y1+=vel*num
             turn+=1
-        elif keys[pygame.K_LEFT] and x2>vel and turn%2!=0:     #changing coordinates with key press
+        elif keys[pygame.K_LEFT] and x2>vel*num and turn%2!=0:     #changing coordinates with key press
             x2-=vel*num
             turn+=1                  #conditions to handle moving out of scrn(coordinates from top left)
-        elif keys[pygame.K_RIGHT] and x2<1254-width-vel and turn%2!=0:
+        elif keys[pygame.K_RIGHT] and x2<1254-width-(vel*num) and turn%2!=0:
             x2+=vel*num
             turn+=1
-        elif keys[pygame.K_UP] and y2>vel and turn%2!=0:
+        elif keys[pygame.K_UP] and y2>vel*num and turn%2!=0:
             y2-=vel*num
             turn+=1
-        elif keys[pygame.K_DOWN] and y2<650-height-vel and turn%2!=0:          #for changing position on arrow key presses
+        elif keys[pygame.K_DOWN] and y2<650-height-(vel*num) and turn%2!=0:          #for changing position on arrow key presses
             y2+=vel*num
             turn+=1
         elif keys[pygame.K_i]:

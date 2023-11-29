@@ -62,8 +62,9 @@ def instructions():
     scrn.blit(i6, (270,273))
 
 
-
+atomic={}
 def drawboard():        #drawing periodic table and color coding
+    global atomic
     rows=9
     column=18
     x_co=5
@@ -71,7 +72,7 @@ def drawboard():        #drawing periodic table and color coding
     atomicnum=1
     elements={}     #elements dictionary
     element_symbols="H, He, Li, Be, B, C, N, O, F, Ne, Na, Mg, Al, Si, P, S, Cl, Ar, K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn, Ga, Ge, As, Se, Br, Kr, Rb, Sr, Y, Zr, Nb, Mo, Tc, Ru, Rh, Pd, Ag, Cd, In, Sn, Sb, Te, I, Xe, Cs, Ba, La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Hf, Ta, W, Re, Os, Ir, Pt, Au, Hg, Tl, Pb, Bi, Po, At, Rn, Fr, Ra, Ac, Th, Pa, U, Np, Pu, Am, Cm, Bk, Cf, Es, Fm, Md, No, Lr, Rf, Db, Sg, Bh, Hs, Mt, Ds, Rg, Cn, Nh, Fl, Mc, Lv, Ts, Og".split(", ")
-    for x in range(len(element_symbols)):
+    for x in range(len(element_symbols)):  #filling dictionary
         elements[x+1]=element_symbols[x]
     font= pygame.font.Font("freesansbold.ttf", 38)
     font2= pygame.font.Font("freesansbold.ttf", 20)
@@ -90,6 +91,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             elif (y in (1,15) and x<7) or (x==4 and y==4) or (x==6 and y==5):
                 pygame.draw.rect(scrn,(pygame.Color("pink2")),(x_co,y_co,68,68))
@@ -98,6 +100,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             elif y==10 and x==5:
                 pygame.draw.rect(scrn,(pygame.Color("darkgoldenrod")),(x_co-1,y_co,69,68))
@@ -106,6 +109,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             elif (x in (4,5) and y==11) or (x==3 and y==14) or (x==3 and y in (6,8)) or (x==5 and y==12) or (x==4 and y==13) or (x==6 and y==3):
                 pygame.draw.rect(scrn,(pygame.Color("indianred2")),(x_co,y_co,68,68))
@@ -114,6 +118,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             elif (x==3 and y in (3,4,5,7)) or (x==1 and y==13) or (x==4 and y==3) or (x==5 and y in (4,5,7,9,13)):
                 pygame.draw.rect(scrn,(pygame.Color("cyan2")),(x_co,y_co,68,68))
@@ -122,6 +127,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             elif x>6:
                 pygame.draw.rect(scrn,(pygame.Color("lightsteelblue3")),(x_co,y_co,68,68))
@@ -130,6 +136,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             else:
                 pygame.draw.rect(scrn,(pygame.Color("lightgoldenrod4")),(x_co,y_co,68,68),1)
@@ -137,6 +144,7 @@ def drawboard():        #drawing periodic table and color coding
                 scrn.blit(element, (x_co+10,y_co+30))
                 num=font2.render(str(atomicnum), True, (pygame.Color("azure4")))
                 scrn.blit(num, (x_co,y_co))
+                atomic[atomicnum]=(x_co,y_co)
                 atomicnum+=1
             if x==5 and y==2:
                 atomicnum=72
@@ -175,6 +183,8 @@ def views(view):
         instructions()
     if view=="g":
         gamewin()
+atomicnum1=0
+atomicnum2=0 
 turn=0    
 while run:
     
@@ -185,43 +195,20 @@ while run:
         view="g"
         keys=pygame.key.get_pressed()   
         num=random.randint(1,6)
-        if keys[pygame.K_LEFT] and x1>vel*num and turn%2==0:     #changing coordinates with key press
-            x1-=vel*num                 #conditions to handle moving out of scrn(coordinates from top left)
+        if keys[pygame.K_SPACE] and turn%2==0 and atomicnum1+num<=79:
+            atomicnum1+=num
+            x1=atomic[atomicnum1][0]+5
+            y1=atomic[atomicnum1][1]+5
             turn+=1
-        elif keys[pygame.K_RIGHT] and x1<1254-width-(vel*num) and turn%2==0:
-            x1+=vel*num
-            turn+=1
-        elif keys[pygame.K_UP] and y1>vel*num and turn%2==0:
-            y1-=vel*num
-            turn+=1
-        elif keys[pygame.K_DOWN] and y1<650-height-(vel*num) and turn%2==0:          #for changing position on arrow key presses
-            y1+=vel*num
-            turn+=1
-        elif keys[pygame.K_LEFT] and x2>vel*num and turn%2!=0:     #changing coordinates with key press
-            x2-=vel*num
-            turn+=1                  #conditions to handle moving out of scrn(coordinates from top left)
-        elif keys[pygame.K_RIGHT] and x2<1254-width-(vel*num) and turn%2!=0:
-            x2+=vel*num
-            turn+=1
-        elif keys[pygame.K_UP] and y2>vel*num and turn%2!=0:
-            y2-=vel*num
-            turn+=1
-        elif keys[pygame.K_DOWN] and y2<650-height-(vel*num) and turn%2!=0:          #for changing position on arrow key presses
-            y2+=vel*num
+        elif keys[pygame.K_SPACE] and turn%2!=0 and atomicnum2+num<=79:
+            atomicnum2+=num
+            x2=atomic[atomicnum2][0]+5
+            y2=atomic[atomicnum2][1]+5
             turn+=1
         elif keys[pygame.K_i]:
             view="i"
 
         views(view)
-                
-        
-               
-        
-
         pygame.display.update()     #to update changes on screen
-        turn+=1
-
-
-    
-
+        turn+=1 
 pygame.quit()

@@ -40,32 +40,18 @@ def player2():
 
 
 def radioactive():
-    """
-    Draws a radioactive line on the screen.
+    
+    #showing a radioactive line on the screen.
 
-    Parameters:
-    - scrn: The screen surface to draw on.
-
-    Returns:
-    None
-    """
     pygame.draw.line(scrn, (pygame.Color("lightsteelblue4")),
                      (209, 345), (209, 413+68), 7)
 
 
 def drawhome():
-    """
-    Draw the home screen on the game window.
+    
+    #Draw the home screen on the game window.
 
-    This function draws a rectangular shape representing the home screen on the game window.
-    It also displays the text "HOME" at the top of the rectangle and an instruction message at a specific location.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-    """
+    
     xh = 210
     yh = 15
     pygame.draw.rect(scrn, (pygame.Color("darkseagreen2")),
@@ -80,9 +66,9 @@ def drawhome():
 
 
 def instructions():
-    """
-    Display the instructions on the screen.
-    """
+    
+    #Display the instructions on the screen.
+    
     font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
     pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod1")),
@@ -263,15 +249,10 @@ def drawboard():  # drawing periodic table and color coding
 
 
 def dice_simulation(num):
-    """
-    Simulates the rolling of a dice and displays the corresponding image on the screen.
 
-    Parameters:
-    num (int): The number rolled on the dice.
+    #Simulation of the rolling of a dice and displaying corresponding image.
 
-    Returns:
-    None
-    """
+   
     h, w = 150, 150
     x = 7
     y = 490
@@ -304,7 +285,7 @@ def views(view):
 atomicnum1 = 0
 atomicnum2 = 0
 
-# if turn is even then player 1 else player 2
+# to switch turns: if turn is even then player 1 else player 2 
 turn = 0
 
 # main loop

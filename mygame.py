@@ -72,43 +72,28 @@ def instructions():
 
     font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
-    pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod1")),
-                     (141, 73, 34, 34))
-    pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod4")),
-                     (141, 73, 34, 34), 1)
-    i1 = font.render("grp1 and grp7 elements reacting and ending at colored positions",
-                     True, (pygame.Color("azure4")))
-    scrn.blit(i1, (270, 73))
-    pygame.draw.rect(scrn, (pygame.Color("pink2")), (141, 113, 34, 34))
-    pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod4")),
-                     (141, 113, 34, 34), 1)
-    i2 = font.render("grp2 and grp6 elements reacting and ending at colored positions",
-                     True, (pygame.Color("azure4")))
-    scrn.blit(i2, (270, 113))
-    pygame.draw.rect(scrn, (pygame.Color("indianred2")), (141, 153, 34, 34))
-    pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod4")),
-                     (141, 153, 34, 34), 1)
-    i3 = font.render("poisonous elements return player to home",
-                     True, (pygame.Color("azure4")))
-    scrn.blit(i3, (270, 153))
-    pygame.draw.rect(scrn, (pygame.Color("lightsteelblue3")),
-                     (141, 193, 34, 34))
-    pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod4")),
-                     (141, 193, 34, 34), 1)
-    i4 = font.render("radioactive elements attack opponent",
-                     True, (pygame.Color("azure4")))
-    scrn.blit(i4, (270, 193))
-    pygame.draw.rect(scrn, (pygame.Color("cyan2")), (141, 233, 34, 34))
-    pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod4")),
-                     (141, 233, 34, 34), 1)
-    i5 = font.render("shield protects from attack of opponent",
-                     True, (pygame.Color("azure4")))
-    scrn.blit(i5, (270, 233))
-    pygame.draw.rect(scrn, (pygame.Color("darkgoldenrod")), (141, 273, 34, 34))
-    pygame.draw.rect(scrn, (pygame.Color("gold1")), (141, 273, 34, 34), 3)
-    i6 = font.render("player wins when it reaches Gold(Au)",
-                     True, (pygame.Color("azure4")))
-    scrn.blit(i6, (270, 273))
+
+    instructions_list = [
+        (pygame.Color("lightgoldenrod1"),
+         "Grp1 and Grp7 elements reacting and ending at colored positions", (141, 73)),
+        (pygame.Color("pink2"),
+         "Grp2 and Grp6 elements reacting and ending at colored positions", (141, 113)),
+        (pygame.Color("indianred2"),
+         "Poisonous elements return player to home", (141, 153)),
+        (pygame.Color("lightsteelblue3"),
+         "Radioactive elements attack opponent", (141, 193)),
+        (pygame.Color("cyan2"), "Shield protects from attack of opponent", (141, 233)),
+        (pygame.Color("darkgoldenrod"),
+         "Player wins when it reaches Gold(Au)", (141, 273))
+    ]
+
+    for color, description, position in instructions_list:
+        pygame.draw.rect(scrn, color, (position[0], position[1], 34, 34))
+        pygame.draw.rect(scrn, pygame.Color("lightgoldenrod4"),
+                         (position[0], position[1], 34, 34), 1)
+        instruction_text = font.render(
+            description, True, pygame.Color("azure4"))
+        scrn.blit(instruction_text, (270, position[1] + 7))
 
 
 atomic = {}

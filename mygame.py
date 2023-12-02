@@ -93,7 +93,7 @@ def instructions():
 
     font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
-    x_offset = 50
+    x_offset = 68
     y_offset = 120
     instructions_list = [
         (pygame.Color("lightgoldenrod1"),
@@ -117,7 +117,8 @@ def instructions():
                          (x_pos, y_pos, 34, 34), 1)
         instruction_text = font.render(
             description, True, pygame.Color("azure4"))
-        scrn.blit(instruction_text, (x_pos+270, y_pos + 7))
+        scrn.blit(instruction_text, (x_pos+x_offset, y_pos + 7))
+    pygame.draw.rect(scrn,(pygame.Color("gold1")),(141+x_offset,273+120,34,34),3)
 
 
 atomic = {}
@@ -352,7 +353,7 @@ while run:
             dice_num = randint(1, 6)
             dice_animation()
             dice_simulation(dice_num)
-            if turn % 2 == 0 and atomicnum1b+dice_num >= 79:
+            if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
                 for i in range(atomicnum1b, atomicnum1b-dice_num-1,-1):
                     atomicnum1b = i
                     x1b = atomic[atomicnum1b][0]+5
@@ -362,7 +363,7 @@ while run:
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
 
-            elif turn % 2 != 0 and atomicnum2b+dice_num >= 79:
+            elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 for i in range(atomicnum2b, atomicnum2b-dice_num-1,-1):
                     atomicnum2b = i
                     x2b = atomic[atomicnum2b][0]+5

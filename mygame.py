@@ -40,18 +40,17 @@ def player2():
 
 
 def radioactive():
-    
-    #showing a radioactive line on the screen.
+
+    # showing a radioactive line on the screen.
 
     pygame.draw.line(scrn, (pygame.Color("lightsteelblue4")),
                      (209, 345), (209, 413+68), 7)
 
 
 def drawhome():
-    
-    #Draw the home screen on the game window.
 
-    
+    # Draw the home screen on the game window.
+
     xh = 210
     yh = 15
     pygame.draw.rect(scrn, (pygame.Color("darkseagreen2")),
@@ -66,9 +65,9 @@ def drawhome():
 
 
 def instructions():
-    
-    #Display the instructions on the screen.
-    
+
+    # Display the instructions on the screen.
+
     font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
     pygame.draw.rect(scrn, (pygame.Color("lightgoldenrod1")),
@@ -250,9 +249,8 @@ def drawboard():  # drawing periodic table and color coding
 
 def dice_simulation(num):
 
-    #Simulation of the rolling of a dice and displaying corresponding image.
+    # Simulation of the rolling of a dice and displaying corresponding image.
 
-   
     h, w = 150, 150
     x = 7
     y = 490
@@ -271,7 +269,7 @@ def gamewin():  # main game window with all display helper functions
     player1()
     player2()
     radioactive()
-    dice_simulation(num)
+    dice_simulation(dice_num)
 
 
 def views(view):
@@ -285,38 +283,40 @@ def views(view):
 atomicnum1 = 0
 atomicnum2 = 0
 
-# to switch turns: if turn is even then player 1 else player 2 
+# to switch turns: if turn is even then player 1 else player 2
 turn = 0
-
+dice_num = 0
 # main loop
 run = True
 while run:
     # to delay the game
-    pygame.time.delay(100)
     for event in pygame.event.get():  # all inputs from user are events
         if event.type == pygame.QUIT:
             run = False  # for quitting the game
         view = "g"
         keys = pygame.key.get_pressed()
-        num = random.randint(1, 6)
 
         if keys[pygame.K_SPACE]:
-
-            if turn % 2 == 0 and atomicnum1+num <= 79:
-                atomicnum1 += num
+            print(atomicnum1, atomicnum2)
+            dice_num = random.randint(1, 6)
+            if turn % 2 == 0 and atomicnum1+dice_num <= 79:
+                atomicnum1 += dice_num
                 x1 = atomic[atomicnum1][0]+5
                 y1 = atomic[atomicnum1][1]+5
-                turn += 1
-            elif turn % 2 != 0 and atomicnum2+num <= 79:
-                atomicnum2 += num
+
+            elif turn % 2 != 0 and atomicnum2+dice_num <= 79:
+                atomicnum2 += dice_num
                 x2 = atomic[atomicnum2][0]+5
                 y2 = atomic[atomicnum2][1]+5
-                turn += 1
 
+            print(atomicnum1, atomicnum2)
+            turn += 1
+            pygame.display.update()
         elif keys[pygame.K_i]:
             view = "i"
 
         views(view)
         pygame.display.update()  # to update changes on screen
-        turn += 1
+
+    pygame.time.delay(100)
 pygame.quit()

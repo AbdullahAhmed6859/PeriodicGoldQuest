@@ -35,13 +35,13 @@ player1aimg = pygame.image.load(
     "images/spider red.png")  # images of both players
 player1aimg = pygame.transform.scale(
     player1aimg, (WIDTH, HEIGHT))  # changing image size
-player2aimg = pygame.image.load("images/bat blue.png")
+player2aimg = pygame.image.load("images/bat black.png")
 player2aimg = pygame.transform.scale(player2aimg, (WIDTH, HEIGHT))
 player1bimg = pygame.image.load(
     "images/spider blue.png")  # images of both players
 player1bimg = pygame.transform.scale(
     player1bimg, (WIDTH, HEIGHT))  # changing image size
-player2bimg = pygame.image.load("images/bat black.png")
+player2bimg = pygame.image.load("images/bat blue.png")
 player2bimg = pygame.transform.scale(player2bimg, (WIDTH, HEIGHT))
 # setting up the sound
 superhero_sound = pygame.mixer.Sound(SOUND_PATH + 'move-self.mp3')

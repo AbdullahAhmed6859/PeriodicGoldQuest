@@ -11,10 +11,14 @@ scrn.fill((pygame.Color("antiquewhite")))
 pygame.display.set_caption("Periodic Gold Quest")  # title
 
 # CHARACTER INITIAL COORS x1 -> superhero 1  x2 -> superhero 2
-x1 = 5+68+68+68+68
-y1 = 5+68
-x2 = 5+68+68+68+68+68
-y2 = y1
+x1a = 5+68+68+68
+y1a = 5+68
+x1b = 5+68+68+68+68
+y1b = y1a
+x2a = 5+68+68+68+68+68
+y2a = 5+68
+x2b = 5+68+68+68+68+68+68
+y2b = y1a
 
 # SUPERHERO DIMENTIONS
 width = 60
@@ -25,20 +29,29 @@ SUPERHERO_SPEED = 5
 # VELOCITY OF CHARACTER/BOX DIMENSIONS
 vel = 68
 
-player1img = pygame.image.load("spider red.png")  # images of both players
-player1img = pygame.transform.scale(
-    player1img, (width, height))  # changing image size
-player2img = pygame.image.load("bat blue.png")
-player2img = pygame.transform.scale(player2img, (width, height))
+player1aimg = pygame.image.load("spider red.png")  # images of both players
+player1aimg = pygame.transform.scale(
+    player1aimg, (width, height))  # changing image size
+player2aimg = pygame.image.load("bat blue.png")
+player2aimg = pygame.transform.scale(player2aimg, (width, height))
+player1bimg = pygame.image.load("spider blue.png")  # images of both players
+player1bimg = pygame.transform.scale(
+    player1bimg, (width, height))  # changing image size
+player2bimg = pygame.image.load("bat black.png")
+player2bimg = pygame.transform.scale(player2bimg, (width, height))
 
 
 def player1():  # showing character on scrn
 
-    scrn.blit(player1img, (x1, y1))
+    scrn.blit(player1aimg, (x1a, y1a))
+    scrn.blit(player1bimg, (x1b, y1b))
+
 
 
 def player2():
-    scrn.blit(player2img, (x2, y2))
+    scrn.blit(player2aimg, (x2a, y2b))
+    scrn.blit(player2bimg, (x2b, y2b))
+
 
 
 def radioactive():
@@ -53,7 +66,7 @@ def drawhome():
 
     # Draw the home screen on the game window.
 
-    xh = 210
+    xh = 200
     yh = 15
     pygame.draw.rect(scrn, (pygame.Color("darkseagreen2")),
                      (xh, yh, 72*4, 77*2))
@@ -291,8 +304,8 @@ while run:
             if turn % 2 == 0 and atomicnum1+dice_num <= 79:
                 for i in range(atomicnum1+1, atomicnum1+dice_num+1):
                     atomicnum1 = i
-                    x1 = atomic[atomicnum1][0]+5
-                    y1 = atomic[atomicnum1][1]+5
+                    x1a = atomic[atomicnum1][0]+5
+                    y1a = atomic[atomicnum1][1]+5
                     views(view)
                     pygame.display.update()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
@@ -300,8 +313,8 @@ while run:
             elif turn % 2 != 0 and atomicnum2+dice_num <= 79:
                 for i in range(atomicnum2+1, atomicnum2+dice_num+1):
                     atomicnum2 = i
-                    x2 = atomic[atomicnum2][0]+5
-                    y2 = atomic[atomicnum2][1]+5
+                    x2a = atomic[atomicnum2][0]+5
+                    y2a = atomic[atomicnum2][1]+5
                     views(view)
                     pygame.display.update()
                     pygame.time.delay(1000//SUPERHERO_SPEED)

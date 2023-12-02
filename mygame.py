@@ -295,10 +295,9 @@ while run:
             run = False  # for quitting the game
         view = "g"
         keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_SPACE]:
-            print(atomicnum1, atomicnum2)
+        if keys[pygame.K_SPACE] and event.type == 768:
             dice_num = random.randint(1, 6)
+
             if turn % 2 == 0 and atomicnum1+dice_num <= 79:
                 for i in range(atomicnum1+1, atomicnum1+dice_num+1):
                     atomicnum1 = i
@@ -317,7 +316,6 @@ while run:
                     pygame.display.update()
                     pygame.time.delay(150)
 
-            print(atomicnum1, atomicnum2)
             turn += 1
         elif keys[pygame.K_i]:
             view = "i"

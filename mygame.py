@@ -300,18 +300,25 @@ while run:
             print(atomicnum1, atomicnum2)
             dice_num = random.randint(1, 6)
             if turn % 2 == 0 and atomicnum1+dice_num <= 79:
-                atomicnum1 += dice_num
-                x1 = atomic[atomicnum1][0]+5
-                y1 = atomic[atomicnum1][1]+5
+                for i in range(atomicnum1+1, atomicnum1+dice_num+1):
+                    atomicnum1 = i
+                    x1 = atomic[atomicnum1][0]+5
+                    y1 = atomic[atomicnum1][1]+5
+                    views(view)
+                    pygame.display.update()
+                    pygame.time.delay(150)
 
             elif turn % 2 != 0 and atomicnum2+dice_num <= 79:
-                atomicnum2 += dice_num
-                x2 = atomic[atomicnum2][0]+5
-                y2 = atomic[atomicnum2][1]+5
+                for i in range(atomicnum2+1, atomicnum2+dice_num+1):
+                    atomicnum2 = i
+                    x2 = atomic[atomicnum2][0]+5
+                    y2 = atomic[atomicnum2][1]+5
+                    views(view)
+                    pygame.display.update()
+                    pygame.time.delay(150)
 
             print(atomicnum1, atomicnum2)
             turn += 1
-            pygame.display.update()
         elif keys[pygame.K_i]:
             view = "i"
 

@@ -20,13 +20,15 @@ y2 = y1
 width = 60
 height = width
 
+# superhero speed
+SUPERHERO_SPEED = 5
 # VELOCITY OF CHARACTER/BOX DIMENSIONS
 vel = 68
 
-player1img = pygame.image.load("superhero (2).png")  # images of both players
+player1img = pygame.image.load("spider red.png")  # images of both players
 player1img = pygame.transform.scale(
     player1img, (width, height))  # changing image size
-player2img = pygame.image.load("superhero (3).png")
+player2img = pygame.image.load("bat blue.png")
 player2img = pygame.transform.scale(player2img, (width, height))
 
 
@@ -295,7 +297,7 @@ while run:
             run = False  # for quitting the game
         view = "g"
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and event.type == 768:
+        if keys[pygame.K_SPACE] and event.type == pygame.KEYDOWN:
             dice_num = random.randint(1, 6)
 
             if turn % 2 == 0 and atomicnum1+dice_num <= 79:
@@ -305,7 +307,7 @@ while run:
                     y1 = atomic[atomicnum1][1]+5
                     views(view)
                     pygame.display.update()
-                    pygame.time.delay(150)
+                    pygame.time.delay(1000//SUPERHERO_SPEED)
 
             elif turn % 2 != 0 and atomicnum2+dice_num <= 79:
                 for i in range(atomicnum2+1, atomicnum2+dice_num+1):
@@ -314,7 +316,7 @@ while run:
                     y2 = atomic[atomicnum2][1]+5
                     views(view)
                     pygame.display.update()
-                    pygame.time.delay(150)
+                    pygame.time.delay(1000//SUPERHERO_SPEED)
 
             turn += 1
         elif keys[pygame.K_i]:

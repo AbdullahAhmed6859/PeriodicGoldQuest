@@ -72,7 +72,8 @@ def instructions():
 
     font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
-
+    x_offset = 50
+    y_offset = 120
     instructions_list = [
         (pygame.Color("lightgoldenrod1"),
          "Grp1 and Grp7 elements reacting and ending at colored positions", (141, 73)),
@@ -88,12 +89,14 @@ def instructions():
     ]
 
     for color, description, position in instructions_list:
-        pygame.draw.rect(scrn, color, (position[0], position[1], 34, 34))
+        x_pos = position[0] + x_offset
+        y_pos = position[1] + y_offset
+        pygame.draw.rect(scrn, color, (x_pos, y_pos, 34, 34))
         pygame.draw.rect(scrn, pygame.Color("lightgoldenrod4"),
-                         (position[0], position[1], 34, 34), 1)
+                         (x_pos, y_pos, 34, 34), 1)
         instruction_text = font.render(
             description, True, pygame.Color("azure4"))
-        scrn.blit(instruction_text, (270, position[1] + 7))
+        scrn.blit(instruction_text, (x_pos+270, y_pos + 7))
 
 
 atomic = {}

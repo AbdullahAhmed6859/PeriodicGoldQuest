@@ -21,6 +21,13 @@ y1b = 5+68
 x2b = 5+68+68+68+68+68+68
 y2b = 5+68
 
+home_coors = {
+    "1a": (x1a, y1a),
+    "1b": (x1b, y1b),
+    "2a": (x2a, y2a),
+    "2b": (x2b, y2b)
+}
+
 # initialising pygame
 pygame.init()
 
@@ -261,6 +268,11 @@ def drawboard():  # drawing periodic table and color coding
         x_co = 5
 
 
+def check_posion(coors):  # checking if the position is poisonous
+    x, y = coors[0]//68, coors[1]//68
+    return (x in (4, 5) and y == 11) or (x == 3 and y == 14) or (x == 3 and y in (6, 8)) or (x == 5 and y == 12) or (x == 4 and y == 13) or (x == 6 and y == 3)
+
+
 def gamewin():  # main game window with all display helper functions
     # to hide previous traces with black colour(bg)
     scrn.fill((pygame.Color("antiquewhite")))
@@ -323,6 +335,9 @@ while run:
             dice.dice_simulation(dice_num, scrn)
             if turn % 2 == 0 and atomicnum1a+dice_num <= 79:
                 movingforward(atomicnum1a+1, atomicnum1a+dice_num)
+                if check_posion(atomic[atomicnum1a]):
+                    atomicnum1a = 0
+                    x1a, y1a = home_coors["1a"]
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
                     atomicnum2a = i
@@ -332,6 +347,9 @@ while run:
                     pygame.display.update()
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
+                if check_posion(atomic[atomicnum2a]):
+                    atomicnum2a = 0
+                    x2a, y2a = home_coors["2a"]
 
             turn += 1
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
@@ -348,6 +366,9 @@ while run:
                     pygame.display.update()
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
+                if check_posion(atomic[atomicnum1b]):
+                    atomicnum1b = 118
+                    x1b, y1b = home_coors["1b"]
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 upper = atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
@@ -359,8 +380,12 @@ while run:
                     pygame.display.update()
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
+                if check_posion(atomic[atomicnum2b]):
+                    atomicnum2b = 118
+                    x2b, y2b = home_coors["2b"]
 
             turn += 1
+            pygame.display.update()
 
         elif keys[pygame.K_i]:
             view = "i"

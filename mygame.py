@@ -131,8 +131,9 @@ def instructions():
 
 
 atomic = {}
-radioactivel=[]
-shield=[]
+radioactivel = []
+shield = []
+
 
 def drawboard():  # drawing periodic table and color coding
     global atomic
@@ -321,8 +322,8 @@ def movingforward(current, next):
 # Atomic numer of SuperHeroes
 atomicnum1a = 0
 atomicnum2a = 0
-atomicnum1b = 118
-atomicnum2b = 118
+atomicnum1b = 119
+atomicnum2b = 119
 # to switch turns: if turn is even then player 1 else player 2
 turn = 0
 dice_num = 0
@@ -348,7 +349,7 @@ while run:
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
                 if atomicnum1a in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
-                    atomicnum2b = 118
+                    atomicnum2b = 119
                     x2b, y2b = home_coors["2b"]
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
@@ -366,7 +367,7 @@ while run:
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
                 if atomicnum2a in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
-                    atomicnum1b = 118
+                    atomicnum1b = 119
                     x1b, y1b = home_coors["1b"]
 
             turn += 1
@@ -375,7 +376,8 @@ while run:
             dice.dice_animation(scrn, lambda: views("g"))
             dice.dice_simulation(dice_num, scrn)
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
-                upper = atomicnum1b-dice_num if y1b == 5+68 else atomicnum1b-dice_num-1
+                # atomicnum1b-dice_num if y1b == 5+68 else atomicnum1b-dice_num-1
+                upper = atomicnum1b-dice_num-1
                 for i in range(atomicnum1b-1, upper, -1):
                     atomicnum1b = i
                     x1b = atomic[atomicnum1b][0]+5
@@ -385,17 +387,18 @@ while run:
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
                 if check_posion(atomic[atomicnum1b]):
-                    atomicnum1b = 118
+                    atomicnum1b = 119
                     x1b, y1b = home_coors["1b"]
                 if atomicnum1b in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
                 if atomicnum1b in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
-                    atomicnum2b = 118
+                    atomicnum2b = 119
                     x2b, y2b = home_coors["2b"]
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
-                upper = atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
+                # atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
+                upper = atomicnum2b-dice_num-1
                 for i in range(atomicnum2b-1, upper, -1):
                     atomicnum2b = i
                     x2b = atomic[atomicnum2b][0]+5
@@ -405,15 +408,14 @@ while run:
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
                 if check_posion(atomic[atomicnum2b]):
-                    atomicnum2b = 118
+                    atomicnum2b = 119
                     x2b, y2b = home_coors["2b"]
                 if atomicnum2b in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
                 if atomicnum2b in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
-                    atomicnum1b = 118
+                    atomicnum1b = 119
                     x1b, y1b = home_coors["1b"]
-
 
             turn += 1
             pygame.display.update()

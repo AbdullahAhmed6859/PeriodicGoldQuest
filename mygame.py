@@ -415,13 +415,13 @@ while run:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
-                if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
-                    atomicnum1a = 46
-                    atomicnum1b = 95
-                    x1a, y1a = atomic[atomicnum1a][0] + \
-                        5, atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0] + \
-                        5, atomic[atomicnum1b][1]+5
+                if atomicnum2a in GRP1 and atomicnum2b in GRP7 or atomicnum2a in GRP7 and atomicnum2b in GRP1:
+                    atomicnum2a = 46
+                    atomicnum2b = 95
+                    x2a, y2a = atomic[atomicnum2a][0] + \
+                        5, atomic[atomicnum2a][1]+5
+                    x2b, y2b = atomic[atomicnum2b][0] + \
+                        5, atomic[atomicnum2b][1]+5
                 if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
@@ -478,13 +478,13 @@ while run:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
-                if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
-                    atomicnum1a = 46
-                    atomicnum1b = 95
-                    x1a, y1a = atomic[atomicnum1a][0] + \
-                        5, atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0] + \
-                        5, atomic[atomicnum1b][1]+5
+                if atomicnum2a in GRP1 and atomicnum2b in GRP7 or atomicnum2a in GRP7 and atomicnum2b in GRP1:
+                    atomicnum2a = 46
+                    atomicnum2b = 95
+                    x2a, y2a = atomic[atomicnum2a][0] + \
+                        5, atomic[atomicnum2a][1]+5
+                    x2b, y2b = atomic[atomicnum2b][0] + \
+                        5, atomic[atomicnum2b][1]+5
                 if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106

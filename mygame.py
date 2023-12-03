@@ -105,31 +105,19 @@ def instructions():
 
 
 atomic = {}
-radioactivel = []
-shield = []
-grp1 = []
-grp7 = []
-grp2 = []
-grp6 = []
 
 
 def drawboard():  # drawing periodic table and color coding
     global atomic
-    rows = 9
-    column = 18
     x_co = 5
     y_co = 5
-    atomicnum = 1
-    elements = {}  # elements dictionary
-
-    for x in range(len(ELEMENT_SYMBOLS)):  # filling dictionary
-        elements[x+1] = ELEMENT_SYMBOLS[x]
+    atomicnum = 1  # elements dictionary
 
     font = pygame.font.Font("freesansbold.ttf", 38)
     font2 = pygame.font.Font("freesansbold.ttf", 20)
 
-    for x in range(rows):
-        for y in range(column):
+    for x in range(ROWS):
+        for y in range(COLUMNS):
             if x == 0 and y > 0 and y < 17:
                 pass
             elif x in (1, 2) and y > 1 and y < 12:
@@ -142,15 +130,11 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod4")), (x_co, y_co, 68, 68), 1)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("lightgoldenrod3")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("lightgoldenrod3")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
                 scrn.blit(num, (x_co, y_co))
-                if y == 0:
-                    grp1.append(atomicnum)
-                if y == 16:
-                    grp7.append(atomicnum)
                 atomic[atomicnum] = (x_co, y_co)
                 atomicnum += 1
 
@@ -160,15 +144,11 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod4")), (x_co, y_co, 68, 68), 1)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("pink3")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("pink3")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
                 scrn.blit(num, (x_co, y_co))
-                if y == 1:
-                    grp2.append(atomicnum)
-                if y == 15:
-                    grp6.append(atomicnum)
                 atomic[atomicnum] = (x_co, y_co)
                 atomicnum += 1
 
@@ -178,7 +158,7 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(scrn, (pygame.Color("gold1")),
                                  (x_co, y_co, 68, 68), 3)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("gold1")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("gold1")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
@@ -192,7 +172,7 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod4")), (x_co, y_co, 68, 68), 1)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("indianred3")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("indianred3")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
@@ -206,12 +186,12 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod4")), (x_co, y_co, 68, 68), 1)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("cyan3")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("cyan3")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
                 scrn.blit(num, (x_co, y_co))
-                shield.append(atomicnum)
+                SHIELD.append(atomicnum)
                 atomic[atomicnum] = (x_co, y_co)
                 atomicnum += 1
 
@@ -221,12 +201,12 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod4")), (x_co, y_co, 68, 68), 1)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("lightsteelblue4")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("lightsteelblue4")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
                 scrn.blit(num, (x_co, y_co))
-                radioactivel.append(atomicnum)
+                RADIOACTIVE_EL.append(atomicnum)
                 atomic[atomicnum] = (x_co, y_co)
                 atomicnum += 1
 
@@ -234,7 +214,7 @@ def drawboard():  # drawing periodic table and color coding
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod4")), (x_co, y_co, 68, 68), 1)
                 element = font.render(
-                    elements[atomicnum], True, (pygame.Color("antiquewhite3")))
+                    ELEMENTS[atomicnum], True, (pygame.Color("antiquewhite3")))
                 scrn.blit(element, (x_co+10, y_co+30))
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
@@ -393,22 +373,22 @@ while run:
                     atomicnum1a = 0
                     x1a, y1a = HOME_CORS["1a"]
                     hero_die_sound.play()
-                if atomicnum1a in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
+                if atomicnum1a in RADIOACTIVE_EL and atomicnum2a not in SHIELD and atomicnum2a not in RADIOACTIVE_EL:
                     atomicnum2a = 0
                     x2a, y2a = HOME_CORS["2a"]
                     hero_die_sound.play()
-                if atomicnum1a in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
+                if atomicnum1a in RADIOACTIVE_EL and atomicnum2b not in SHIELD and atomicnum2b not in RADIOACTIVE_EL:
                     atomicnum2b = 119
                     x2b, y2b = HOME_CORS["2b"]
                     hero_die_sound.play()
-                if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
+                if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
                     atomicnum1a = 46
                     atomicnum1b = 95
                     x1a, y1a = atomic[atomicnum1a][0] + \
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                if atomicnum1a in grp2 and atomicnum1b in grp6 or atomicnum1a in grp6 and atomicnum1b in grp2:
+                if atomicnum1a in GRP2 and atomicnum1b in GRP6 or atomicnum1a in GRP6 and atomicnum1b in GRP2:
                     atomicnum1a = 41
                     atomicnum1b = 106
                     x1a, y1a = atomic[atomicnum1a][0] + \
@@ -421,22 +401,22 @@ while run:
                     atomicnum2a = 0
                     x2a, y2a = HOME_CORS["2a"]
                     hero_die_sound.play()
-                if atomicnum2a in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
+                if atomicnum2a in RADIOACTIVE_EL and atomicnum1a not in SHIELD and atomicnum1a not in RADIOACTIVE_EL:
                     atomicnum1a = 0
                     x1a, y1a = HOME_CORS["1a"]
                     hero_die_sound.play()
-                if atomicnum2a in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
+                if atomicnum2a in RADIOACTIVE_EL and atomicnum1b not in SHIELD and atomicnum1b not in RADIOACTIVE_EL:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
-                if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
+                if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
                     atomicnum1a = 46
                     atomicnum1b = 95
                     x1a, y1a = atomic[atomicnum1a][0] + \
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                if atomicnum2a in grp2 and atomicnum2b in grp6 or atomicnum2a in grp6 and atomicnum2b in grp2:
+                if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
                     x2a, y2a = atomic[atomicnum2a][0] + \
@@ -456,22 +436,22 @@ while run:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
-                if atomicnum1b in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
+                if atomicnum1b in RADIOACTIVE_EL and atomicnum2a not in SHIELD and atomicnum2a not in RADIOACTIVE_EL:
                     atomicnum2a = 0
                     x2a, y2a = HOME_CORS["2a"]
                     hero_die_sound.play()
-                if atomicnum1b in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
+                if atomicnum1b in RADIOACTIVE_EL and atomicnum2b not in SHIELD and atomicnum2b not in RADIOACTIVE_EL:
                     atomicnum2b = 119
                     x2b, y2b = HOME_CORS["2b"]
                     hero_die_sound.play()
-                if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
+                if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
                     atomicnum1a = 46
                     atomicnum1b = 95
                     x1a, y1a = atomic[atomicnum1a][0] + \
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                if atomicnum1a in grp2 and atomicnum1b in grp6 or atomicnum1a in grp6 and atomicnum1b in grp2:
+                if atomicnum1a in GRP2 and atomicnum1b in GRP6 or atomicnum1a in GRP6 and atomicnum1b in GRP2:
                     atomicnum1a = 41
                     atomicnum1b = 106
                     x1a, y1a = atomic[atomicnum1a][0] + \
@@ -486,22 +466,22 @@ while run:
                     atomicnum2b = 119
                     x2b, y2b = HOME_CORS["2b"]
                     hero_die_sound.play()
-                if atomicnum2b in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
+                if atomicnum2b in RADIOACTIVE_EL and atomicnum1a not in SHIELD and atomicnum1a not in RADIOACTIVE_EL:
                     atomicnum1a = 0
                     x1a, y1a = HOME_CORS["1a"]
                     hero_die_sound.play()
-                if atomicnum2b in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
+                if atomicnum2b in RADIOACTIVE_EL and atomicnum1b not in SHIELD and atomicnum1b not in RADIOACTIVE_EL:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
-                if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
+                if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
                     atomicnum1a = 46
                     atomicnum1b = 95
                     x1a, y1a = atomic[atomicnum1a][0] + \
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                if atomicnum2a in grp2 and atomicnum2b in grp6 or atomicnum2a in grp6 and atomicnum2b in grp2:
+                if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
                     x2a, y2a = atomic[atomicnum2a][0] + \

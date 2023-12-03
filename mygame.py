@@ -354,6 +354,7 @@ atomicnum2b = 119
 # to switch turns: if turn is even then player 1 else player 2
 turn = 0
 dice_num = 0
+dicerun=True
 # main loop
 run = True
 while run:
@@ -363,10 +364,16 @@ while run:
             run = False  # for quitting the game
         view = "g"
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_1] and event.type == pygame.KEYDOWN:
+        if keys[pygame.K_SPACE]and dicerun==True:
             dice_num = randint(1, 6)
             dice.dice_animation(scrn, lambda: views("g"))
             dice.dice_simulation(dice_num, scrn)
+            views(view)
+            pygame.display.update()
+            superhero_sound.play()
+            dicerun=False
+
+        elif keys[pygame.K_1] and event.type == pygame.KEYDOWN and dicerun==False:
             if turn % 2 == 0 and atomicnum1a+dice_num <= 79:
                 movingforward1a(atomicnum1a+1, atomicnum1a+dice_num)
                 if check_posion(atomic[atomicnum1a]):
@@ -425,10 +432,8 @@ while run:
                         5, atomic[atomicnum2b][1]+5
 
             turn += 1
-        elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
-            dice_num = randint(1, 6)
-            dice.dice_animation(scrn, lambda: views("g"))
-            dice.dice_simulation(dice_num, scrn)
+            dicerun=True
+        elif keys[pygame.K_2] and event.type == pygame.KEYDOWN and dicerun==False:
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
                 movingforward1b(atomicnum1b-1, atomicnum1b-dice_num)
 
@@ -458,6 +463,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
+               
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
@@ -488,6 +494,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
+            dicerun=True
 
             turn += 1
             pygame.display.update()

@@ -269,8 +269,11 @@ def drawboard():  # drawing periodic table and color coding
 
 
 def check_posion(coors):  # checking if the position is poisonous
-    x, y = coors[0]//68, coors[1]//68
-    return (x in (4, 5) and y == 11) or (x == 3 and y == 14) or (x == 3 and y in (6, 8)) or (x == 5 and y == 12) or (x == 4 and y == 13) or (x == 6 and y == 3)
+    y, x = coors[0]//68, coors[1]//68
+    result = (x in (4, 5) and y == 11) or (x == 3 and y == 14) or (x == 3 and y in (
+        6, 8)) or (x == 5 and y == 12) or (x == 4 and y == 13) or (x == 6 and y == 3)
+    # print(x, y, result)
+    return result
 
 
 def gamewin():  # main game window with all display helper functions

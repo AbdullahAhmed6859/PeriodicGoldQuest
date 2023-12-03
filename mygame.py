@@ -48,9 +48,13 @@ player1bimg = pygame.transform.scale(
     player1bimg, (WIDTH, HEIGHT))  # changing image size
 player2bimg = pygame.image.load(IMG_PATH+"bat blue.png")
 player2bimg = pygame.transform.scale(player2bimg, (WIDTH, HEIGHT))
+
 # setting up the sound
 superhero_sound = pygame.mixer.Sound(SOUND_PATH + 'move-self.mp3')
 superhero_sound.set_volume(0.5)
+
+hero_die_sound = pygame.mixer.Sound(SOUND_PATH + 'notify.mp3')
+hero_die_sound.set_volume(0.5)
 
 dice_sound = pygame.mixer.Sound(SOUND_PATH + 'dice_roll.mp3')
 dice_sound.set_volume(0.5)
@@ -345,12 +349,15 @@ while run:
                 if check_posion(atomic[atomicnum1a]):
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
+                    hero_die_sound.play()
                 if atomicnum1a in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
+                    hero_die_sound.play()
                 if atomicnum1a in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
                     atomicnum2b = 119
                     x2b, y2b = home_coors["2b"]
+                    hero_die_sound.play()
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
                     atomicnum2a = i
@@ -363,12 +370,15 @@ while run:
                 if check_posion(atomic[atomicnum2a]):
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
+                    hero_die_sound.play()
                 if atomicnum2a in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
+                    hero_die_sound.play()
                 if atomicnum2a in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
                     atomicnum1b = 119
                     x1b, y1b = home_coors["1b"]
+                    hero_die_sound.play()
 
             turn += 1
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
@@ -386,15 +396,19 @@ while run:
                     pygame.display.update()
                     superhero_sound.play()
                     pygame.time.delay(1000//SUPERHERO_SPEED)
+
                 if check_posion(atomic[atomicnum1b]):
                     atomicnum1b = 119
                     x1b, y1b = home_coors["1b"]
+                    hero_die_sound.play()
                 if atomicnum1b in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
+                    hero_die_sound.play()
                 if atomicnum1b in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
                     atomicnum2b = 119
                     x2b, y2b = home_coors["2b"]
+                    hero_die_sound.play()
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 # atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
@@ -410,12 +424,15 @@ while run:
                 if check_posion(atomic[atomicnum2b]):
                     atomicnum2b = 119
                     x2b, y2b = home_coors["2b"]
+                    hero_die_sound.play()
                 if atomicnum2b in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
+                    hero_die_sound.play()
                 if atomicnum2b in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
                     atomicnum1b = 119
                     x1b, y1b = home_coors["1b"]
+                    hero_die_sound.play()
 
             turn += 1
             pygame.display.update()

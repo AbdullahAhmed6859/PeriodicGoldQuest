@@ -366,8 +366,8 @@ while run:
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
                     atomicnum1a=46
                     atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0],atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0],atomic[atomicnum1b][1]+5
+                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
                     atomicnum2a = i
@@ -392,8 +392,8 @@ while run:
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
                     atomicnum1a=46
                     atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0],atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0],atomic[atomicnum1b][1]+5
+                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
 
             turn += 1
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
@@ -427,8 +427,8 @@ while run:
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
                     atomicnum1a=46
                     atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0],atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0],atomic[atomicnum1b][1]+5
+                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 # atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
@@ -456,8 +456,8 @@ while run:
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
                     atomicnum1a=46
                     atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0],atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0],atomic[atomicnum1b][1]+5
+                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
 
             turn += 1
             pygame.display.update()

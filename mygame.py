@@ -139,6 +139,8 @@ radioactivel = []
 shield = []
 grp1=[]
 grp7=[]
+grp2=[]
+grp6=[]
 
 def drawboard():  # drawing periodic table and color coding
     global atomic
@@ -194,6 +196,10 @@ def drawboard():  # drawing periodic table and color coding
                 num = font2.render(str(atomicnum), True,
                                    (pygame.Color("azure4")))
                 scrn.blit(num, (x_co, y_co))
+                if y == 1:
+                    grp2.append(atomicnum)
+                if y == 15:
+                    grp6.append(atomicnum)
                 atomic[atomicnum] = (x_co, y_co)
                 atomicnum += 1
 
@@ -368,6 +374,11 @@ while run:
                     atomicnum1b=95
                     x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                if atomicnum1a in grp2 and atomicnum1b in grp6 or atomicnum1a in grp6 and atomicnum1b in grp2:
+                    atomicnum1a=41
+                    atomicnum1b=106
+                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
                     atomicnum2a = i
@@ -394,6 +405,11 @@ while run:
                     atomicnum1b=95
                     x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                if atomicnum2a in grp2 and atomicnum2b in grp6 or atomicnum2a in grp6 and atomicnum2b in grp2:
+                    atomicnum2a=41
+                    atomicnum2b=106
+                    x2a, y2a = atomic[atomicnum2a][0]+5,atomic[atomicnum2a][1]+5
+                    x2b, y2b = atomic[atomicnum2b][0]+5,atomic[atomicnum2b][1]+5
 
             turn += 1
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
@@ -429,6 +445,11 @@ while run:
                     atomicnum1b=95
                     x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                if atomicnum1a in grp2 and atomicnum1b in grp6 or atomicnum1a in grp6 and atomicnum1b in grp2:
+                    atomicnum1a=41
+                    atomicnum1b=106
+                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 # atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
@@ -458,6 +479,11 @@ while run:
                     atomicnum1b=95
                     x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                if atomicnum2a in grp2 and atomicnum2b in grp6 or atomicnum2a in grp6 and atomicnum2b in grp2:
+                    atomicnum2a=41
+                    atomicnum2b=106
+                    x2a, y2a = atomic[atomicnum2a][0]+5,atomic[atomicnum2a][1]+5
+                    x2b, y2b = atomic[atomicnum2b][0]+5,atomic[atomicnum2b][1]+5
 
             turn += 1
             pygame.display.update()

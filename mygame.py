@@ -254,6 +254,13 @@ def gamewin():  # main game window with all display helper functions
     radioactive()
     dice.dice_simulation(dice_num, scrn)
 
+def winning(player):
+    pygame.draw.ellipse(
+                    scrn, (pygame.Color("gold")), (300, 100, 400,200))
+    font = pygame.font.Font("freesansbold.ttf", 38)
+    TEXT = font.render(player+" WINS!", True, (pygame.Color("darkgoldenrod")))
+    scrn.blit(TEXT, (370,170))
+    
 
 def views(view):
     if view == "i":
@@ -355,6 +362,7 @@ atomicnum2b = 119
 turn = 0
 dice_num = 0
 dicerun = True
+win=False
 # main loop
 run = True
 while run:
@@ -401,6 +409,11 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
+                if atomicnum1a==79:
+                    win=True
+                    winner="PLAYER1"
+
+
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 movingforward2a(atomicnum2a+1, atomicnum2a+dice_num)
                 if check_posion(atomic[atomicnum2a]):
@@ -429,6 +442,9 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
+                if atomicnum2a==79:
+                    win=True
+                    winner="PLAYER2"
 
             turn += 1
             dicerun = True
@@ -462,6 +478,9 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
+                if atomicnum1b==79:
+                    win=True
+                    winner="PLAYER1"
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
@@ -492,6 +511,9 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
+                if atomicnum2b==79:
+                    win=True
+                    winner="PLAYER2"
             dicerun = True
 
             turn += 1
@@ -501,6 +523,8 @@ while run:
             view = "i"
 
         views(view)
+        if win==True:
+            winning(winner)
         pygame.display.update()  # to update changes on screen
 
     pygame.time.delay(100)

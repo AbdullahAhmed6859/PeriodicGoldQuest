@@ -344,10 +344,10 @@ while run:
                 if check_posion(atomic[atomicnum1a]):
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
-                if atomicnum1a in radioactivel and atomicnum2a not in shield:
+                if atomicnum1a in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
-                if atomicnum1a in radioactivel and atomicnum2b not in shield:
+                if atomicnum1a in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
                     atomicnum2b = 0
                     x2b, y2b = home_coors["2b"]
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
@@ -362,10 +362,10 @@ while run:
                 if check_posion(atomic[atomicnum2a]):
                     atomicnum2a = 0
                     x2a, y2a = home_coors["2a"]
-                if atomicnum2a in radioactivel and atomicnum1a not in shield:
+                if atomicnum2a in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
                     atomicnum1a = 0
                     x1a, y1a = home_coors["1a"]
-                if atomicnum2a in radioactivel and atomicnum1b not in shield:
+                if atomicnum2a in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
                     atomicnum1b = 0
                     x1b, y1b = home_coors["1b"]
 
@@ -387,11 +387,11 @@ while run:
                 if check_posion(atomic[atomicnum1b]):
                     atomicnum1b = 118
                     x1b, y1b = home_coors["1b"]
-                if atomicnum1b in radioactivel and atomicnum2a not in shield:
-                    atomicnum2a = 0
+                if atomicnum1b in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
+                    atomicnum2a = 118
                     x2a, y2a = home_coors["2a"]
-                if atomicnum1b in radioactivel and atomicnum2b not in shield:
-                    atomicnum2b = 0
+                if atomicnum1b in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
+                    atomicnum2b = 118
                     x2b, y2b = home_coors["2b"]
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
@@ -407,11 +407,11 @@ while run:
                 if check_posion(atomic[atomicnum2b]):
                     atomicnum2b = 118
                     x2b, y2b = home_coors["2b"]
-                if atomicnum2b in radioactivel and atomicnum1a not in shield:
-                    atomicnum1a = 0
+                if atomicnum2b in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
+                    atomicnum1a = 118
                     x1a, y1a = home_coors["1a"]
-                if atomicnum2b in radioactivel and atomicnum1b not in shield:
-                    atomicnum1b = 0
+                if atomicnum2b in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
+                    atomicnum1b = 118
                     x1b, y1b = home_coors["1b"]
 
 

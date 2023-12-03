@@ -1,6 +1,6 @@
 import pygame
-from random import randint, shuffle
-import time
+from random import randint
+from dice import Dice
 
 IMG_PATH = "images/"
 SOUND_PATH = "sounds/"
@@ -10,8 +10,6 @@ HEIGHT = WIDTH
 VEL = 68  # box dimensions
 SCREEN_DIMENSIONS = 1254, 650
 SUPERHERO_SPEED = 5  # moving speed
-dice_images = ["dice.1.png", "dice.2.png", "dice.3.png",
-               "dice.4.png", "dice.5.png", "dice.6.png"]
 
 # CHARACTER INITIAL COORS x1 -> superhero 1  x2 -> superhero 2
 x1a = 5+68+68+68
@@ -32,16 +30,16 @@ scrn.fill((pygame.Color("antiquewhite")))
 pygame.display.set_caption("Periodic Gold Quest")  # title of the game
 
 player1aimg = pygame.image.load(
-    "images/spider red.png")  # images of both players
+    IMG_PATH+"spider red.png")  # images of both players
 player1aimg = pygame.transform.scale(
     player1aimg, (WIDTH, HEIGHT))  # changing image size
-player2aimg = pygame.image.load("images/bat black.png")
+player2aimg = pygame.image.load(IMG_PATH+"spider blue.png")
 player2aimg = pygame.transform.scale(player2aimg, (WIDTH, HEIGHT))
 player1bimg = pygame.image.load(
-    "images/spider blue.png")  # images of both players
+    IMG_PATH+"bat red.png")  # images of both players
 player1bimg = pygame.transform.scale(
     player1bimg, (WIDTH, HEIGHT))  # changing image size
-player2bimg = pygame.image.load("images/bat blue.png")
+player2bimg = pygame.image.load(IMG_PATH+"bat blue.png")
 player2bimg = pygame.transform.scale(player2bimg, (WIDTH, HEIGHT))
 # setting up the sound
 superhero_sound = pygame.mixer.Sound(SOUND_PATH + 'move-self.mp3')
@@ -49,12 +47,15 @@ superhero_sound.set_volume(0.5)
 
 dice_sound = pygame.mixer.Sound(SOUND_PATH + 'dice_roll.mp3')
 dice_sound.set_volume(0.5)
+dice_images = ["dice.1.png", "dice.2.png", "dice.3.png",
+               "dice.4.png", "dice.5.png", "dice.6.png"]
+
+dice = Dice(dice_images, dice_sound)
 
 
 def player1():  # showing character on scrn
     scrn.blit(player1aimg, (x1a, y1a))
     scrn.blit(player1bimg, (x1b, y1b))
-
 
 
 def player2():
@@ -118,7 +119,8 @@ def instructions():
         instruction_text = font.render(
             description, True, pygame.Color("azure4"))
         scrn.blit(instruction_text, (x_pos+x_offset, y_pos + 7))
-    pygame.draw.rect(scrn,(pygame.Color("gold1")),(141+x_offset,273+120,34,34),3)
+    pygame.draw.rect(scrn, (pygame.Color("gold1")),
+                     (141+x_offset, 273+120, 34, 34), 3)
 
 
 atomic = {}
@@ -259,36 +261,6 @@ def drawboard():  # drawing periodic table and color coding
         x_co = 5
 
 
-def dice_animation():
-    # Animation of the rolling of a dice and displaying corresponding image.
-    time1 = time.time()
-    h, w = 150, 150
-    x = 7
-    y = 490
-
-    dice_sound.play()
-    while time.time() - time1 < dice_sound.get_length():
-        img = dice_images[randint(0, 5)]
-        diceimg = pygame.image.load(
-            "images/"+img)  # images of both players
-        diceimg = pygame.transform.scale(diceimg, (h, w))
-        scrn.blit(diceimg, (x, y))
-        pygame.display.update()
-        pygame.time.delay(50)
-        views("g")
-
-
-def dice_simulation(num):
-    # Simulation of the rolling of a dice and displaying corresponding image.
-    h, w = 150, 150
-    x = 7
-    y = 490
-    diceimg = pygame.image.load(
-        "images/"+dice_images[num-1])  # images of both players
-    diceimg = pygame.transform.scale(diceimg, (h, w))
-    scrn.blit(diceimg, (x, y))
-
-
 def gamewin():  # main game window with all display helper functions
     # to hide previous traces with black colour(bg)
     scrn.fill((pygame.Color("antiquewhite")))
@@ -297,7 +269,7 @@ def gamewin():  # main game window with all display helper functions
     player1()
     player2()
     radioactive()
-    dice_simulation(dice_num)
+    dice.dice_simulation(dice_num, scrn)
 
 
 def views(view):
@@ -306,17 +278,18 @@ def views(view):
     if view == "g":
         gamewin()
 
-def movingforward(current,next):
-    global atomic,x1a,y1a,atomicnum1a
-    
-    if current==next:
+
+def movingforward(current, next):
+    global atomic, x1a, y1a, atomicnum1a
+
+    if current == next:
         x1a = atomic[current][0]+5
         y1a = atomic[current][1]+5
         views(view)
         pygame.display.update()
         superhero_sound.play()
         pygame.time.delay(1000//SUPERHERO_SPEED)
-        atomicnum1a=next
+        atomicnum1a = next
     else:
         x1a = atomic[current][0]+5
         y1a = atomic[current][1]+5
@@ -324,8 +297,8 @@ def movingforward(current,next):
         pygame.display.update()
         superhero_sound.play()
         pygame.time.delay(1000//SUPERHERO_SPEED)
-        movingforward(current+1,next)
-        
+        movingforward(current+1, next)
+
 
 # Atomic numer of SuperHeroes
 atomicnum1a = 0
@@ -346,10 +319,10 @@ while run:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1] and event.type == pygame.KEYDOWN:
             dice_num = randint(1, 6)
-            dice_animation()
-            dice_simulation(dice_num)
+            dice.dice_animation(scrn, lambda: views("g"))
+            dice.dice_simulation(dice_num, scrn)
             if turn % 2 == 0 and atomicnum1a+dice_num <= 79:
-                movingforward(atomicnum1a+1,atomicnum1a+dice_num)
+                movingforward(atomicnum1a+1, atomicnum1a+dice_num)
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
                     atomicnum2a = i
@@ -363,10 +336,11 @@ while run:
             turn += 1
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
             dice_num = randint(1, 6)
-            dice_animation()
-            dice_simulation(dice_num)
+            dice.dice_animation(scrn, lambda: views("g"))
+            dice.dice_simulation(dice_num, scrn)
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
-                for i in range(atomicnum1b, atomicnum1b-dice_num,-1):
+                upper = atomicnum1b-dice_num if y1b == 5+68 else atomicnum1b-dice_num-1
+                for i in range(atomicnum1b-1, upper, -1):
                     atomicnum1b = i
                     x1b = atomic[atomicnum1b][0]+5
                     y1b = atomic[atomicnum1b][1]+5
@@ -376,7 +350,8 @@ while run:
                     pygame.time.delay(1000//SUPERHERO_SPEED)
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
-                for i in range(atomicnum2b, atomicnum2b-dice_num,-1):
+                upper = atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
+                for i in range(atomicnum2b-1, upper, -1):
                     atomicnum2b = i
                     x2b = atomic[atomicnum2b][0]+5
                     y2b = atomic[atomicnum2b][1]+5
@@ -386,7 +361,7 @@ while run:
                     pygame.time.delay(1000//SUPERHERO_SPEED)
 
             turn += 1
-            
+
         elif keys[pygame.K_i]:
             view = "i"
 

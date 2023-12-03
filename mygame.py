@@ -1,32 +1,7 @@
 import pygame
 from random import randint
 from dice import Dice
-
-IMG_PATH = "images/"
-SOUND_PATH = "sounds/"
-# superhero dimensions
-WIDTH = 60
-HEIGHT = WIDTH
-VEL = 68  # box dimensions
-SCREEN_DIMENSIONS = 1254, 650
-SUPERHERO_SPEED = 5  # moving speed
-
-# CHARACTER INITIAL COORS x1 -> superhero 1  x2 -> superhero 2
-x1a = 5+68+68+68
-y1a = 5+68
-x2a = 5+68+68+68+68+68
-y2a = 5+68
-x1b = 5+68+68+68+68
-y1b = 5+68
-x2b = 5+68+68+68+68+68+68
-y2b = 5+68
-
-home_coors = {
-    "1a": (x1a, y1a),
-    "1b": (x1b, y1b),
-    "2a": (x2a, y2a),
-    "2b": (x2b, y2b)
-}
+from constants import *
 
 # initialising pygame
 pygame.init()
@@ -49,7 +24,8 @@ player1bimg = pygame.transform.scale(
 player2bimg = pygame.image.load(IMG_PATH+"bat blue.png")
 player2bimg = pygame.transform.scale(player2bimg, (WIDTH, HEIGHT))
 
-# setting up the sound
+
+# setting up the sound effects
 superhero_sound = pygame.mixer.Sound(SOUND_PATH + 'move-self.mp3')
 superhero_sound.set_volume(0.5)
 
@@ -58,13 +34,13 @@ hero_die_sound.set_volume(0.5)
 
 dice_sound = pygame.mixer.Sound(SOUND_PATH + 'dice_roll.mp3')
 dice_sound.set_volume(0.5)
-dice_images = ["dice.1.png", "dice.2.png", "dice.3.png",
-               "dice.4.png", "dice.5.png", "dice.6.png"]
 
-dice = Dice(dice_images, dice_sound)
+# setting up the dice
+dice = Dice(DICE_IMAGES, dice_sound)
 
 
-def player1():  # showing character on scrn
+# showing the heros on the screen
+def player1():
     scrn.blit(player1aimg, (x1a, y1a))
     scrn.blit(player1bimg, (x1b, y1b))
 
@@ -75,17 +51,13 @@ def player2():
 
 
 def radioactive():
-
     # showing a radioactive line on the screen.
-
     pygame.draw.line(scrn, (pygame.Color("lightsteelblue4")),
                      (209, 345), (209, 413+68), 7)
 
 
 def drawhome():
-
     # Draw the home screen on the game window.
-
     xh = 200
     yh = 15
     pygame.draw.rect(scrn, (pygame.Color("darkseagreen2")),
@@ -100,9 +72,7 @@ def drawhome():
 
 
 def instructions():
-
     # Display the instructions on the screen.
-
     font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
     x_offset = 68
@@ -137,10 +107,11 @@ def instructions():
 atomic = {}
 radioactivel = []
 shield = []
-grp1=[]
-grp7=[]
-grp2=[]
-grp6=[]
+grp1 = []
+grp7 = []
+grp2 = []
+grp6 = []
+
 
 def drawboard():  # drawing periodic table and color coding
     global atomic
@@ -150,11 +121,9 @@ def drawboard():  # drawing periodic table and color coding
     y_co = 5
     atomicnum = 1
     elements = {}  # elements dictionary
-    element_symbols = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce',
-                       'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og']
 
-    for x in range(len(element_symbols)):  # filling dictionary
-        elements[x+1] = element_symbols[x]
+    for x in range(len(ELEMENT_SYMBOLS)):  # filling dictionary
+        elements[x+1] = ELEMENT_SYMBOLS[x]
 
     font = pygame.font.Font("freesansbold.ttf", 38)
     font2 = pygame.font.Font("freesansbold.ttf", 20)
@@ -313,7 +282,7 @@ def views(view):
         gamewin()
 
 
-def movingforward(current, next):
+def movingforward1a(current, next):
     global atomic, x1a, y1a, atomicnum1a
 
     if current == next:
@@ -331,7 +300,70 @@ def movingforward(current, next):
         pygame.display.update()
         superhero_sound.play()
         pygame.time.delay(1000//SUPERHERO_SPEED)
-        movingforward(current+1, next)
+        movingforward1a(current+1, next)
+
+
+def movingforward2a(current, next):
+    global atomic, x2a, y2a, atomicnum2a
+
+    if current == next:
+        x2a = atomic[current][0]+5
+        y2a = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        atomicnum2a = next
+    else:
+        x2a = atomic[current][0]+5
+        y2a = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        movingforward2a(current+1, next)
+
+
+def movingforward1b(current, next):
+    global atomic, x1b, y1b, atomicnum1b
+
+    if current == next:
+        x1b = atomic[current][0]+5
+        y1b = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        atomicnum1b = next
+    else:
+        x1b = atomic[current][0]+5
+        y1b = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        movingforward1b(current-1, next)
+
+
+def movingforward2b(current, next):
+    global atomic, x2b, y2b, atomicnum2b
+
+    if current == next:
+        x2b = atomic[current][0]+5
+        y2b = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        atomicnum2b = next
+    else:
+        x2b = atomic[current][0]+5
+        y2b = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        movingforward2b(current-1, next)
 
 
 # Atomic numer of SuperHeroes
@@ -356,60 +388,61 @@ while run:
             dice.dice_animation(scrn, lambda: views("g"))
             dice.dice_simulation(dice_num, scrn)
             if turn % 2 == 0 and atomicnum1a+dice_num <= 79:
-                movingforward(atomicnum1a+1, atomicnum1a+dice_num)
+                movingforward1a(atomicnum1a+1, atomicnum1a+dice_num)
                 if check_posion(atomic[atomicnum1a]):
                     atomicnum1a = 0
-                    x1a, y1a = home_coors["1a"]
+                    x1a, y1a = HOME_CORS["1a"]
                     hero_die_sound.play()
                 if atomicnum1a in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
                     atomicnum2a = 0
-                    x2a, y2a = home_coors["2a"]
+                    x2a, y2a = HOME_CORS["2a"]
                     hero_die_sound.play()
                 if atomicnum1a in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
                     atomicnum2b = 119
-                    x2b, y2b = home_coors["2b"]
+                    x2b, y2b = HOME_CORS["2b"]
                     hero_die_sound.play()
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
-                    atomicnum1a=46
-                    atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                    atomicnum1a = 46
+                    atomicnum1b = 95
+                    x1a, y1a = atomic[atomicnum1a][0] + \
+                        5, atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0] + \
+                        5, atomic[atomicnum1b][1]+5
                 if atomicnum1a in grp2 and atomicnum1b in grp6 or atomicnum1a in grp6 and atomicnum1b in grp2:
-                    atomicnum1a=41
-                    atomicnum1b=106
-                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                    atomicnum1a = 41
+                    atomicnum1b = 106
+                    x1a, y1a = atomic[atomicnum1a][0] + \
+                        5, atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0] + \
+                        5, atomic[atomicnum1b][1]+5
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
-                for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
-                    atomicnum2a = i
-                    x2a = atomic[atomicnum2a][0]+5
-                    y2a = atomic[atomicnum2a][1]+5
-                    views(view)
-                    pygame.display.update()
-                    superhero_sound.play()
-                    pygame.time.delay(1000//SUPERHERO_SPEED)
+                movingforward2a(atomicnum2a+1, atomicnum2a+dice_num)
                 if check_posion(atomic[atomicnum2a]):
                     atomicnum2a = 0
-                    x2a, y2a = home_coors["2a"]
+                    x2a, y2a = HOME_CORS["2a"]
                     hero_die_sound.play()
                 if atomicnum2a in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
                     atomicnum1a = 0
-                    x1a, y1a = home_coors["1a"]
+                    x1a, y1a = HOME_CORS["1a"]
                     hero_die_sound.play()
                 if atomicnum2a in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
                     atomicnum1b = 119
-                    x1b, y1b = home_coors["1b"]
+                    x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
-                    atomicnum1a=46
-                    atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                    atomicnum1a = 46
+                    atomicnum1b = 95
+                    x1a, y1a = atomic[atomicnum1a][0] + \
+                        5, atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0] + \
+                        5, atomic[atomicnum1b][1]+5
                 if atomicnum2a in grp2 and atomicnum2b in grp6 or atomicnum2a in grp6 and atomicnum2b in grp2:
-                    atomicnum2a=41
-                    atomicnum2b=106
-                    x2a, y2a = atomic[atomicnum2a][0]+5,atomic[atomicnum2a][1]+5
-                    x2b, y2b = atomic[atomicnum2b][0]+5,atomic[atomicnum2b][1]+5
+                    atomicnum2a = 41
+                    atomicnum2b = 106
+                    x2a, y2a = atomic[atomicnum2a][0] + \
+                        5, atomic[atomicnum2a][1]+5
+                    x2b, y2b = atomic[atomicnum2b][0] + \
+                        5, atomic[atomicnum2b][1]+5
 
             turn += 1
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN:
@@ -417,73 +450,64 @@ while run:
             dice.dice_animation(scrn, lambda: views("g"))
             dice.dice_simulation(dice_num, scrn)
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
-                # atomicnum1b-dice_num if y1b == 5+68 else atomicnum1b-dice_num-1
-                upper = atomicnum1b-dice_num-1
-                for i in range(atomicnum1b-1, upper, -1):
-                    atomicnum1b = i
-                    x1b = atomic[atomicnum1b][0]+5
-                    y1b = atomic[atomicnum1b][1]+5
-                    views(view)
-                    pygame.display.update()
-                    superhero_sound.play()
-                    pygame.time.delay(1000//SUPERHERO_SPEED)
+                movingforward1b(atomicnum1b-1, atomicnum1b-dice_num)
 
                 if check_posion(atomic[atomicnum1b]):
                     atomicnum1b = 119
-                    x1b, y1b = home_coors["1b"]
+                    x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
                 if atomicnum1b in radioactivel and atomicnum2a not in shield and atomicnum2a not in radioactivel:
                     atomicnum2a = 0
-                    x2a, y2a = home_coors["2a"]
+                    x2a, y2a = HOME_CORS["2a"]
                     hero_die_sound.play()
                 if atomicnum1b in radioactivel and atomicnum2b not in shield and atomicnum2b not in radioactivel:
                     atomicnum2b = 119
-                    x2b, y2b = home_coors["2b"]
+                    x2b, y2b = HOME_CORS["2b"]
                     hero_die_sound.play()
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
-                    atomicnum1a=46
-                    atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                    atomicnum1a = 46
+                    atomicnum1b = 95
+                    x1a, y1a = atomic[atomicnum1a][0] + \
+                        5, atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0] + \
+                        5, atomic[atomicnum1b][1]+5
                 if atomicnum1a in grp2 and atomicnum1b in grp6 or atomicnum1a in grp6 and atomicnum1b in grp2:
-                    atomicnum1a=41
-                    atomicnum1b=106
-                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                    atomicnum1a = 41
+                    atomicnum1b = 106
+                    x1a, y1a = atomic[atomicnum1a][0] + \
+                        5, atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0] + \
+                        5, atomic[atomicnum1b][1]+5
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
-                # atomicnum2b-dice_num if y2b == 5+68 else atomicnum2b-dice_num-1
-                upper = atomicnum2b-dice_num-1
-                for i in range(atomicnum2b-1, upper, -1):
-                    atomicnum2b = i
-                    x2b = atomic[atomicnum2b][0]+5
-                    y2b = atomic[atomicnum2b][1]+5
-                    views(view)
-                    pygame.display.update()
-                    superhero_sound.play()
-                    pygame.time.delay(1000//SUPERHERO_SPEED)
+                movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
+
                 if check_posion(atomic[atomicnum2b]):
                     atomicnum2b = 119
-                    x2b, y2b = home_coors["2b"]
+                    x2b, y2b = HOME_CORS["2b"]
                     hero_die_sound.play()
                 if atomicnum2b in radioactivel and atomicnum1a not in shield and atomicnum1a not in radioactivel:
                     atomicnum1a = 0
-                    x1a, y1a = home_coors["1a"]
+                    x1a, y1a = HOME_CORS["1a"]
                     hero_die_sound.play()
                 if atomicnum2b in radioactivel and atomicnum1b not in shield and atomicnum1b not in radioactivel:
                     atomicnum1b = 119
-                    x1b, y1b = home_coors["1b"]
+                    x1b, y1b = HOME_CORS["1b"]
                     hero_die_sound.play()
                 if atomicnum1a in grp1 and atomicnum1b in grp7 or atomicnum1a in grp7 and atomicnum1b in grp1:
-                    atomicnum1a=46
-                    atomicnum1b=95
-                    x1a, y1a = atomic[atomicnum1a][0]+5,atomic[atomicnum1a][1]+5
-                    x1b, y1b = atomic[atomicnum1b][0]+5,atomic[atomicnum1b][1]+5
+                    atomicnum1a = 46
+                    atomicnum1b = 95
+                    x1a, y1a = atomic[atomicnum1a][0] + \
+                        5, atomic[atomicnum1a][1]+5
+                    x1b, y1b = atomic[atomicnum1b][0] + \
+                        5, atomic[atomicnum1b][1]+5
                 if atomicnum2a in grp2 and atomicnum2b in grp6 or atomicnum2a in grp6 and atomicnum2b in grp2:
-                    atomicnum2a=41
-                    atomicnum2b=106
-                    x2a, y2a = atomic[atomicnum2a][0]+5,atomic[atomicnum2a][1]+5
-                    x2b, y2b = atomic[atomicnum2b][0]+5,atomic[atomicnum2b][1]+5
+                    atomicnum2a = 41
+                    atomicnum2b = 106
+                    x2a, y2a = atomic[atomicnum2a][0] + \
+                        5, atomic[atomicnum2a][1]+5
+                    x2b, y2b = atomic[atomicnum2b][0] + \
+                        5, atomic[atomicnum2b][1]+5
 
             turn += 1
             pygame.display.update()

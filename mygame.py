@@ -306,6 +306,26 @@ def views(view):
     if view == "g":
         gamewin()
 
+def movingforward(current,next):
+    global atomic,x1a,y1a,atomicnum1a
+    
+    if current==next:
+        x1a = atomic[current][0]+5
+        y1a = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        atomicnum1a=next
+    else:
+        x1a = atomic[current][0]+5
+        y1a = atomic[current][1]+5
+        views(view)
+        pygame.display.update()
+        superhero_sound.play()
+        pygame.time.delay(1000//SUPERHERO_SPEED)
+        movingforward(current+1,next)
+        
 
 # Atomic numer of SuperHeroes
 atomicnum1a = 0
@@ -329,15 +349,7 @@ while run:
             dice_animation()
             dice_simulation(dice_num)
             if turn % 2 == 0 and atomicnum1a+dice_num <= 79:
-                for i in range(atomicnum1a+1, atomicnum1a+dice_num+1):
-                    atomicnum1a = i
-                    x1a = atomic[atomicnum1a][0]+5
-                    y1a = atomic[atomicnum1a][1]+5
-                    views(view)
-                    pygame.display.update()
-                    superhero_sound.play()
-                    pygame.time.delay(1000//SUPERHERO_SPEED)
-
+                movingforward(atomicnum1a+1,atomicnum1a+dice_num)
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 for i in range(atomicnum2a+1, atomicnum2a+dice_num+1):
                     atomicnum2a = i
@@ -354,7 +366,7 @@ while run:
             dice_animation()
             dice_simulation(dice_num)
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
-                for i in range(atomicnum1b, atomicnum1b-dice_num-1,-1):
+                for i in range(atomicnum1b, atomicnum1b-dice_num,-1):
                     atomicnum1b = i
                     x1b = atomic[atomicnum1b][0]+5
                     y1b = atomic[atomicnum1b][1]+5
@@ -364,7 +376,7 @@ while run:
                     pygame.time.delay(1000//SUPERHERO_SPEED)
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
-                for i in range(atomicnum2b, atomicnum2b-dice_num-1,-1):
+                for i in range(atomicnum2b, atomicnum2b-dice_num,-1):
                     atomicnum2b = i
                     x2b = atomic[atomicnum2b][0]+5
                     y2b = atomic[atomicnum2b][1]+5

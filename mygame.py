@@ -267,6 +267,7 @@ def winning(player):
     font = pygame.font.Font("freesansbold.ttf", 38)
     TEXT = font.render(player+" WINS!", True, (pygame.Color("darkgoldenrod")))
     scrn.blit(TEXT, (370, 170))
+    win = False
 
 
 def views(view):

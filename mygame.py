@@ -37,6 +37,9 @@ dice_sound.set_volume(0.5)
 
 teleport_sound = pygame.mixer.Sound(SOUND_PATH + 'teleport.wav')
 teleport_sound.set_volume(0.5)
+
+win_sound = pygame.mixer.Sound(SOUND_PATH + 'win.mp3')
+win_sound.set_volume(1)
 # setting up the dice
 dice = Dice(DICE_IMAGES, dice_sound)
 
@@ -258,6 +261,7 @@ def gamewin():  # main game window with all display helper functions
 
 
 def winning(player):
+    win_sound.play()
     pygame.draw.ellipse(
         scrn, (pygame.Color("gold")), (300, 100, 400, 200))
     font = pygame.font.Font("freesansbold.ttf", 38)

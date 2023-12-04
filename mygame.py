@@ -55,6 +55,22 @@ def player2():
     scrn.blit(player2bimg, (x2b, y2b))
 
 
+def reset_coors():
+    global x1a, y1a, x2a, y2a, x1b, y1b, x2b, y2b, atomicnum1a, atomicnum2a, atomicnum1b, atomicnum2b
+    x1a = 5+68+68+68
+    y1a = 5+68
+    x2a = 5+68+68+68+68+68
+    y2a = 5+68
+    x1b = 5+68+68+68+68
+    y1b = 5+68
+    x2b = 5+68+68+68+68+68+68
+    y2b = 5+68
+    atomicnum1a = 0
+    atomicnum2a = 0
+    atomicnum1b = 119
+    atomicnum2b = 119
+
+
 def radioactive():
     # showing a radioactive line on the screen.
     pygame.draw.line(scrn, (pygame.Color("lightsteelblue4")),
@@ -75,6 +91,7 @@ def drawhome():
                        True, (pygame.Color("goldenrod3")))
     scrn.blit(ins, (821, 5))
 
+
 def updates(player):
     # Draw the home screen on the game window.
     xh = 492
@@ -83,7 +100,7 @@ def updates(player):
                      (xh, yh, 72*4, 70*2))
     font = pygame.font.Font("freesansbold.ttf", 38)
     head = font.render(player, True, (pygame.Color("burlywood4")))
-    scrn.blit(head, (xh+(60),yh+40))
+    scrn.blit(head, (xh+(60), yh+40))
 
 
 def instructions():
@@ -258,7 +275,10 @@ def check_posion(coors):  # checking if the position is poisonous
     # print(x, y, result)
     return result
 
-player="PLAYER 1"
+
+player = "PLAYER 1"
+
+
 def gamewin():  # main game window with all display helper functions
     # to hide previous traces with black colour(bg)
     global player
@@ -273,13 +293,18 @@ def gamewin():  # main game window with all display helper functions
 
 
 def winning(player):
+    global win
     win_sound.play()
     pygame.draw.ellipse(
         scrn, (pygame.Color("gold")), (300, 100, 400, 200))
     font = pygame.font.Font("freesansbold.ttf", 38)
     TEXT = font.render(player+" WINS!", True, (pygame.Color("darkgoldenrod")))
     scrn.blit(TEXT, (370, 170))
+    pygame.display.update()
     win = False
+    pygame.time.delay(5000)
+    reset_coors()
+    pygame.display.update()
 
 
 def views(view):
@@ -434,7 +459,7 @@ while run:
                 if atomicnum1a == 79:
                     win = True
                     winner = "PLAYER1"
-                player="PLAYER 2"
+                player = "PLAYER 2"
 
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 movingforward2a(atomicnum2a+1, atomicnum2a+dice_num)
@@ -469,13 +494,13 @@ while run:
                 if atomicnum2a == 79:
                     win = True
                     winner = "PLAYER2"
-                player="PLAYER 1"
+                player = "PLAYER 1"
 
             turn += 1
             dicerun = True
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN and dicerun == False:
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
-                player="PLAYER 1"
+                player = "PLAYER 1"
                 movingforward1b(atomicnum1b-1, atomicnum1b-dice_num)
 
                 if check_posion(atomic[atomicnum1b]):
@@ -509,10 +534,10 @@ while run:
                 if atomicnum1b == 79:
                     win = True
                     winner = "PLAYER1"
-                player="PLAYER 2"
+                player = "PLAYER 2"
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
-                player="PLAYER 2"
+                player = "PLAYER 2"
                 movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
 
                 if check_posion(atomic[atomicnum2b]):
@@ -546,7 +571,7 @@ while run:
                 if atomicnum2b == 79:
                     win = True
                     winner = "PLAYER2"
-                player="PLAYER 1"
+                player = "PLAYER 1"
             dicerun = True
 
             turn += 1

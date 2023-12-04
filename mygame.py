@@ -75,6 +75,16 @@ def drawhome():
                        True, (pygame.Color("goldenrod3")))
     scrn.blit(ins, (821, 5))
 
+def updates(player):
+    # Draw the home screen on the game window.
+    xh = 492
+    yh = 15
+    pygame.draw.rect(scrn, (pygame.Color("burlywood3")),
+                     (xh, yh, 72*4, 77*2))
+    font = pygame.font.Font("freesansbold.ttf", 38)
+    head = font.render(player, True, (pygame.Color("burlywood4")))
+    scrn.blit(head, (xh+(72),yh+20))
+
 
 def instructions():
     # Display the instructions on the screen.
@@ -248,12 +258,14 @@ def check_posion(coors):  # checking if the position is poisonous
     # print(x, y, result)
     return result
 
-
+player="PLAYER 1"
 def gamewin():  # main game window with all display helper functions
     # to hide previous traces with black colour(bg)
+    global player
     scrn.fill((pygame.Color("antiquewhite")))
     drawboard()
     drawhome()
+    updates(player)
     player1()
     player2()
     radioactive()
@@ -422,6 +434,7 @@ while run:
                 if atomicnum1a == 79:
                     win = True
                     winner = "PLAYER1"
+                player="PLAYER 2"
 
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 movingforward2a(atomicnum2a+1, atomicnum2a+dice_num)
@@ -456,11 +469,13 @@ while run:
                 if atomicnum2a == 79:
                     win = True
                     winner = "PLAYER2"
+                    player="PLAYER 1"
 
             turn += 1
             dicerun = True
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN and dicerun == False:
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
+                player="PLAYER 1"
                 movingforward1b(atomicnum1b-1, atomicnum1b-dice_num)
 
                 if check_posion(atomic[atomicnum1b]):
@@ -494,8 +509,10 @@ while run:
                 if atomicnum1b == 79:
                     win = True
                     winner = "PLAYER1"
+                player="PLAYER 2"
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
+                player="PLAYER 2"
                 movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
 
                 if check_posion(atomic[atomicnum2b]):
@@ -529,6 +546,7 @@ while run:
                 if atomicnum2b == 79:
                     win = True
                     winner = "PLAYER2"
+                player="PLAYER 1"
             dicerun = True
 
             turn += 1

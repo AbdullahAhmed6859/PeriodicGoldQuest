@@ -29,8 +29,8 @@ player2bimg = pygame.transform.scale(player2bimg, (WIDTH, HEIGHT))
 superhero_sound = pygame.mixer.Sound(SOUND_PATH + 'move-self.mp3')
 superhero_sound.set_volume(0.5)
 
-hero_die_sound = pygame.mixer.Sound(SOUND_PATH + 'notify.mp3')
-hero_die_sound.set_volume(0.5)
+blip_sound = pygame.mixer.Sound(SOUND_PATH + 'notify.mp3')
+blip_sound.set_volume(0.5)
 
 dice_sound = pygame.mixer.Sound(SOUND_PATH + 'dice_roll.mp3')
 dice_sound.set_volume(0.5)
@@ -254,13 +254,14 @@ def gamewin():  # main game window with all display helper functions
     radioactive()
     dice.dice_simulation(dice_num, scrn)
 
+
 def winning(player):
     pygame.draw.ellipse(
-                    scrn, (pygame.Color("gold")), (300, 100, 400,200))
+        scrn, (pygame.Color("gold")), (300, 100, 400, 200))
     font = pygame.font.Font("freesansbold.ttf", 38)
     TEXT = font.render(player+" WINS!", True, (pygame.Color("darkgoldenrod")))
-    scrn.blit(TEXT, (370,170))
-    
+    scrn.blit(TEXT, (370, 170))
+
 
 def views(view):
     if view == "i":
@@ -362,7 +363,7 @@ atomicnum2b = 119
 turn = 0
 dice_num = 0
 dicerun = True
-win=False
+win = False
 # main loop
 run = True
 while run:
@@ -386,15 +387,15 @@ while run:
                 if check_posion(atomic[atomicnum1a]):
                     atomicnum1a = 0
                     x1a, y1a = HOME_CORS["1a"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum1a in RADIOACTIVE_EL and atomicnum2a not in SHIELD and atomicnum2a not in RADIOACTIVE_EL:
                     atomicnum2a = 0
                     x2a, y2a = HOME_CORS["2a"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum1a in RADIOACTIVE_EL and atomicnum2b not in SHIELD and atomicnum2b not in RADIOACTIVE_EL:
                     atomicnum2b = 119
                     x2b, y2b = HOME_CORS["2b"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
                     atomicnum1a = 46
                     atomicnum1b = 95
@@ -402,6 +403,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
+                    blip_sound.play()
                 if atomicnum1a in GRP2 and atomicnum1b in GRP6 or atomicnum1a in GRP6 and atomicnum1b in GRP2:
                     atomicnum1a = 41
                     atomicnum1b = 106
@@ -409,25 +411,25 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                if atomicnum1a==79:
-                    win=True
-                    winner="PLAYER1"
-
+                    blip_sound.play()
+                if atomicnum1a == 79:
+                    win = True
+                    winner = "PLAYER1"
 
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
                 movingforward2a(atomicnum2a+1, atomicnum2a+dice_num)
                 if check_posion(atomic[atomicnum2a]):
                     atomicnum2a = 0
                     x2a, y2a = HOME_CORS["2a"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum2a in RADIOACTIVE_EL and atomicnum1a not in SHIELD and atomicnum1a not in RADIOACTIVE_EL:
                     atomicnum1a = 0
                     x1a, y1a = HOME_CORS["1a"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum2a in RADIOACTIVE_EL and atomicnum1b not in SHIELD and atomicnum1b not in RADIOACTIVE_EL:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum2a in GRP1 and atomicnum2b in GRP7 or atomicnum2a in GRP7 and atomicnum2b in GRP1:
                     atomicnum2a = 46
                     atomicnum2b = 95
@@ -435,6 +437,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
+                    blip_sound.play()
                 if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
@@ -442,9 +445,10 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
-                if atomicnum2a==79:
-                    win=True
-                    winner="PLAYER2"
+                    blip_sound.play()
+                if atomicnum2a == 79:
+                    win = True
+                    winner = "PLAYER2"
 
             turn += 1
             dicerun = True
@@ -455,15 +459,15 @@ while run:
                 if check_posion(atomic[atomicnum1b]):
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum1b in RADIOACTIVE_EL and atomicnum2a not in SHIELD and atomicnum2a not in RADIOACTIVE_EL:
                     atomicnum2a = 0
                     x2a, y2a = HOME_CORS["2a"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum1b in RADIOACTIVE_EL and atomicnum2b not in SHIELD and atomicnum2b not in RADIOACTIVE_EL:
                     atomicnum2b = 119
                     x2b, y2b = HOME_CORS["2b"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum1a in GRP1 and atomicnum1b in GRP7 or atomicnum1a in GRP7 and atomicnum1b in GRP1:
                     atomicnum1a = 46
                     atomicnum1b = 95
@@ -471,6 +475,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
+                    blip_sound.play()
                 if atomicnum1a in GRP2 and atomicnum1b in GRP6 or atomicnum1a in GRP6 and atomicnum1b in GRP2:
                     atomicnum1a = 41
                     atomicnum1b = 106
@@ -478,9 +483,10 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                if atomicnum1b==79:
-                    win=True
-                    winner="PLAYER1"
+                    blip_sound.play()
+                if atomicnum1b == 79:
+                    win = True
+                    winner = "PLAYER1"
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
                 movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
@@ -488,15 +494,15 @@ while run:
                 if check_posion(atomic[atomicnum2b]):
                     atomicnum2b = 119
                     x2b, y2b = HOME_CORS["2b"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum2b in RADIOACTIVE_EL and atomicnum1a not in SHIELD and atomicnum1a not in RADIOACTIVE_EL:
                     atomicnum1a = 0
                     x1a, y1a = HOME_CORS["1a"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum2b in RADIOACTIVE_EL and atomicnum1b not in SHIELD and atomicnum1b not in RADIOACTIVE_EL:
                     atomicnum1b = 119
                     x1b, y1b = HOME_CORS["1b"]
-                    hero_die_sound.play()
+                    blip_sound.play()
                 if atomicnum2a in GRP1 and atomicnum2b in GRP7 or atomicnum2a in GRP7 and atomicnum2b in GRP1:
                     atomicnum2a = 46
                     atomicnum2b = 95
@@ -504,6 +510,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
+                    blip_sound.play()
                 if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
@@ -511,9 +518,10 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
-                if atomicnum2b==79:
-                    win=True
-                    winner="PLAYER2"
+                    blip_sound.play()
+                if atomicnum2b == 79:
+                    win = True
+                    winner = "PLAYER2"
             dicerun = True
 
             turn += 1
@@ -523,7 +531,7 @@ while run:
             view = "i"
 
         views(view)
-        if win==True:
+        if win == True:
             winning(winner)
         pygame.display.update()  # to update changes on screen
 

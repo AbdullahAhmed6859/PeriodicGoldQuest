@@ -80,10 +80,10 @@ def updates(player):
     xh = 492
     yh = 15
     pygame.draw.rect(scrn, (pygame.Color("burlywood3")),
-                     (xh, yh, 72*4, 77*2))
+                     (xh, yh, 72*4, 70*2))
     font = pygame.font.Font("freesansbold.ttf", 38)
     head = font.render(player, True, (pygame.Color("burlywood4")))
-    scrn.blit(head, (xh+(72),yh+20))
+    scrn.blit(head, (xh+(60),yh+40))
 
 
 def instructions():
@@ -469,7 +469,7 @@ while run:
                 if atomicnum2a == 79:
                     win = True
                     winner = "PLAYER2"
-                    player="PLAYER 1"
+                player="PLAYER 1"
 
             turn += 1
             dicerun = True

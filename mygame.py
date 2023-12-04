@@ -35,6 +35,8 @@ blip_sound.set_volume(0.5)
 dice_sound = pygame.mixer.Sound(SOUND_PATH + 'dice_roll.mp3')
 dice_sound.set_volume(0.5)
 
+teleport_sound = pygame.mixer.Sound(SOUND_PATH + 'teleport.wav')
+teleport_sound.set_volume(0.5)
 # setting up the dice
 dice = Dice(DICE_IMAGES, dice_sound)
 
@@ -403,7 +405,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum1a in GRP2 and atomicnum1b in GRP6 or atomicnum1a in GRP6 and atomicnum1b in GRP2:
                     atomicnum1a = 41
                     atomicnum1b = 106
@@ -411,7 +413,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum1a == 79:
                     win = True
                     winner = "PLAYER1"
@@ -437,7 +439,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
@@ -445,7 +447,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum2a == 79:
                     win = True
                     winner = "PLAYER2"
@@ -475,7 +477,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum1a in GRP2 and atomicnum1b in GRP6 or atomicnum1a in GRP6 and atomicnum1b in GRP2:
                     atomicnum1a = 41
                     atomicnum1b = 106
@@ -483,7 +485,7 @@ while run:
                         5, atomic[atomicnum1a][1]+5
                     x1b, y1b = atomic[atomicnum1b][0] + \
                         5, atomic[atomicnum1b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum1b == 79:
                     win = True
                     winner = "PLAYER1"
@@ -510,7 +512,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum2a in GRP2 and atomicnum2b in GRP6 or atomicnum2a in GRP6 and atomicnum2b in GRP2:
                     atomicnum2a = 41
                     atomicnum2b = 106
@@ -518,7 +520,7 @@ while run:
                         5, atomic[atomicnum2a][1]+5
                     x2b, y2b = atomic[atomicnum2b][0] + \
                         5, atomic[atomicnum2b][1]+5
-                    blip_sound.play()
+                    teleport_sound.play()
                 if atomicnum2b == 79:
                     win = True
                     winner = "PLAYER2"

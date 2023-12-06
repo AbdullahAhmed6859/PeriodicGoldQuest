@@ -56,6 +56,7 @@ def player2():
 
 
 def reset_coors():
+    #to send heroes back to home
     global x1a, y1a, x2a, y2a, x1b, y1b, x2b, y2b, atomicnum1a, atomicnum2a, atomicnum1b, atomicnum2b
     x1a = 5+68+68+68
     y1a = 5+68
@@ -105,8 +106,18 @@ def updates(player):
 
 def instructions():
     # Display the instructions on the screen.
-    font = pygame.font.Font("freesansbold.ttf", 20)
     scrn.fill((pygame.Color("antiquewhite")))
+    font = pygame.font.Font("freesansbold.ttf", 20)
+    instruction_text = font.render(">>RED IS PLAYER 1(HERO 1+HERO2) BLUE IS PLAYER 2(HERO 1+HERO2)", True, pygame.Color("azure4"))
+    scrn.blit(instruction_text, (141, 43))
+    instruction_text = font.render(">>HEROES 1 START FROM ATOMIC NUMBER 1, HEROES 2 START FROM ATOMIC NUMBER 118 ", True, pygame.Color("azure4"))
+    scrn.blit(instruction_text, (141, 63))
+    instruction_text = font.render(">>MAKE ANY OF YOUR HEROES REACH GOLD TO WIN", True, pygame.Color("azure4"))
+    scrn.blit(instruction_text, (141, 83))
+    instruction_text = font.render(">>PRESS 'SPACE' TO ROLL DICE", True, pygame.Color("azure4"))
+    scrn.blit(instruction_text, (141, 103))
+    instruction_text = font.render(">>PRESS '1' TO MOVE YOR HERO 1\n PRESS '2' TO MOVE HERO 2", True, pygame.Color("azure4"))
+    scrn.blit(instruction_text, (141, 123))
     x_offset = 68
     y_offset = 120
     instructions_list = [
@@ -149,6 +160,7 @@ def drawboard():  # drawing periodic table and color coding
     font2 = pygame.font.Font("freesansbold.ttf", 20)
 
     for x in range(ROWS):
+        #drawing groups and periods
         for y in range(COLUMNS):
             if x == 0 and y > 0 and y < 17:
                 pass
@@ -157,6 +169,7 @@ def drawboard():  # drawing periodic table and color coding
             elif x in (7, 8) and y < 4:
                 pass
             elif (y in (0, 16) and x < 7) or (x == 4 and y == 9) or (x == 8 and y == 9):
+                #grp 1 and 7 elements color coded
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightgoldenrod1")), (x_co, y_co, 68, 68))
                 pygame.draw.rect(
@@ -171,6 +184,7 @@ def drawboard():  # drawing periodic table and color coding
                 atomicnum += 1
 
             elif (y in (1, 15) and x < 7) or (x == 4 and y == 4) or (x == 6 and y == 5):
+                #group 2 and 6 elements color coded
                 pygame.draw.rect(scrn, (pygame.Color("pink2")),
                                  (x_co, y_co, 68, 68))
                 pygame.draw.rect(
@@ -185,6 +199,7 @@ def drawboard():  # drawing periodic table and color coding
                 atomicnum += 1
 
             elif y == 10 and x == 5:
+                #Gold Color coded
                 pygame.draw.rect(
                     scrn, (pygame.Color("darkgoldenrod")), (x_co-1, y_co, 69, 68))
                 pygame.draw.rect(scrn, (pygame.Color("gold1")),
@@ -199,6 +214,7 @@ def drawboard():  # drawing periodic table and color coding
                 atomicnum += 1
 
             elif (x in (4, 5) and y == 11) or (x == 3 and y == 14) or (x == 3 and y in (6, 8)) or (x == 5 and y == 12) or (x == 4 and y == 13) or (x == 6 and y == 3):
+                #poisonous elements
                 pygame.draw.rect(
                     scrn, (pygame.Color("indianred2")), (x_co, y_co, 68, 68))
                 pygame.draw.rect(
@@ -213,6 +229,7 @@ def drawboard():  # drawing periodic table and color coding
                 atomicnum += 1
 
             elif (x == 3 and y in (3, 4, 5, 7)) or (x == 1 and y == 13) or (x == 4 and y == 3) or (x == 5 and y in (4, 5, 7, 9, 13)):
+                #shield
                 pygame.draw.rect(scrn, (pygame.Color("cyan2")),
                                  (x_co, y_co, 68, 68))
                 pygame.draw.rect(
@@ -228,6 +245,7 @@ def drawboard():  # drawing periodic table and color coding
                 atomicnum += 1
 
             elif x > 6:
+                #radioactive elements color coded 
                 pygame.draw.rect(
                     scrn, (pygame.Color("lightsteelblue3")), (x_co, y_co, 68, 68))
                 pygame.draw.rect(
@@ -293,6 +311,7 @@ def gamewin():  # main game window with all display helper functions
 
 
 def winning(player):
+    #showing winner on screen
     global win
     win_sound.play()
     pygame.draw.ellipse(
@@ -308,6 +327,7 @@ def winning(player):
 
 
 def views(view):
+    #showing game window and instruction window
     if view == "i":
         instructions()
     if view == "g":
@@ -315,6 +335,7 @@ def views(view):
 
 
 def movingforward1a(current, next):
+    #recursive loop for moving player
     global atomic, x1a, y1a, atomicnum1a
 
     if current == next:
@@ -336,6 +357,7 @@ def movingforward1a(current, next):
 
 
 def movingforward2a(current, next):
+    #recursive loop for moving player
     global atomic, x2a, y2a, atomicnum2a
 
     if current == next:
@@ -357,6 +379,7 @@ def movingforward2a(current, next):
 
 
 def movingforward1b(current, next):
+    #recursive loop for moving player
     global atomic, x1b, y1b, atomicnum1b
 
     if current == next:
@@ -378,6 +401,7 @@ def movingforward1b(current, next):
 
 
 def movingforward2b(current, next):
+    #recursive loop for moving player
     global atomic, x2b, y2b, atomicnum2b
 
     if current == next:
@@ -418,6 +442,7 @@ while run:
         view = "g"
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and dicerun == True:
+            #to roll the dice
             dice_num = randint(1, 6)
             dice.dice_animation(scrn, lambda: views("g"))
             dice.dice_simulation(dice_num, scrn)
@@ -426,7 +451,9 @@ while run:
             dicerun = False
 
         elif keys[pygame.K_1] and event.type == pygame.KEYDOWN and dicerun == False:
+            # to move player's first tile
             if turn % 2 == 0 and atomicnum1a+dice_num <= 79:
+                #player 1 turn
                 movingforward1a(atomicnum1a+1, atomicnum1a+dice_num)
                 if check_posion(atomic[atomicnum1a]):
                     atomicnum1a = 0
@@ -462,6 +489,7 @@ while run:
                 player = "PLAYER 2"
 
             elif turn % 2 != 0 and atomicnum2a+dice_num <= 79:
+                #player 2 turn
                 movingforward2a(atomicnum2a+1, atomicnum2a+dice_num)
                 if check_posion(atomic[atomicnum2a]):
                     atomicnum2a = 0
@@ -499,7 +527,9 @@ while run:
             turn += 1
             dicerun = True
         elif keys[pygame.K_2] and event.type == pygame.KEYDOWN and dicerun == False:
+            # to move player's second tile
             if turn % 2 == 0 and atomicnum1b-dice_num >= 79:
+                #player 1 turn
                 player = "PLAYER 1"
                 movingforward1b(atomicnum1b-1, atomicnum1b-dice_num)
 
@@ -537,6 +567,7 @@ while run:
                 player = "PLAYER 2"
 
             elif turn % 2 != 0 and atomicnum2b-dice_num >= 79:
+                #player 2 turn
                 player = "PLAYER 2"
                 movingforward2b(atomicnum2b-1, atomicnum2b-dice_num)
 
